@@ -2500,7 +2500,7 @@
 					"$(PROJECT_DIR)/WeiXiaoYuan/LibBPush",
 				);
 				PRODUCT_NAME = "校友录";
-				PROVISIONING_PROFILE = "4f7a0554-3035-48ff-b868-19fcaebceda1";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2530,7 +2530,7 @@
 					"$(PROJECT_DIR)/WeiXiaoYuan/LibBPush",
 				);
 				PRODUCT_NAME = "校友录";
-				PROVISIONING_PROFILE = "4f7a0554-3035-48ff-b868-19fcaebceda1";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

@@ -38,16 +38,16 @@
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"两次输入密码不一致！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
     }else{
-    WebServiceController *web = [WebServiceController shareController:nil];
-    NSString* result = [web updatePassword:self.oldPasswordField.text:self.refreshPasswordField.text];
-    if ([result isEqualToString:@"true"]) {
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"修改成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];
-        [self dismissModalViewControllerAnimated:YES];
-    }else{
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"修改失败" message:result delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];
-    }
+//        WebServiceController *web = [WebServiceController shareController:nil];
+//        NSString* result = [web updatePassword:self.oldPasswordField.text:self.refreshPasswordField.text];
+//        if ([result isEqualToString:@"true"]) {
+//            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"修改成功" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//            [alert show];
+//            [self dismissModalViewControllerAnimated:YES];
+//        }else{
+//            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"修改失败" message:result delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+//            [alert show];
+//        }
     }
 }
 - (IBAction)cancelButtonPressed: (id)sender

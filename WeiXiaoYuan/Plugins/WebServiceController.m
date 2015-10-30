@@ -87,19 +87,17 @@ static METHOD_TYPE _methodType;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self->currentView animated:YES];
     hud.labelText = @"正在登录，请等待...";
 }
-- (void)SetDalegate:id
-{
-    delegate = id;
-}
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
     [MBProgressHUD hideHUDForView:self->currentView animated:YES];
     if (request.responseStatusCode == 400) {
         //textView.text = ;
-        [self->delegate HttpFailCallBack:@"Invalid code"];
+        [[KGProgressView windowProgressView] showErrorWithStatus:@"请求失败:Invalid code" duration:0.5];
+        //[self->delegate HttpFailCallBack:@"Invalid code"];
     } else if (request.responseStatusCode == 403) {
         //textView.text = ;
-        [self->delegate HttpFailCallBack:@"Code already used"];
+        //[self->delegate HttpFailCallBack:@"Code already used"];
+        [[KGProgressView windowProgressView] showErrorWithStatus:@"请求失败:Code already used" duration:0.5];
     } else if (request.responseStatusCode == 200) {
         //NSString *responseString = [request responseString];
         NSMutableData *data = request.rawResponseData;
@@ -115,10 +113,10 @@ static METHOD_TYPE _methodType;
                 [[KGProgressView windowProgressView] showErrorWithStatus:@"请求失败" duration:0.5];
             }
         }else{
-            [[KGProgressView windowProgressView] showErrorWithStatus:@"请求失败" duration:0.5];
+            [[KGProgressView windowProgressView] showErrorWithStatus:@"请求失败:无返回数据" duration:0.5];
         }
     } else {
-        [[KGProgressView windowProgressView] showErrorWithStatus:@"请求失败" duration:0.5];
+        [[KGProgressView windowProgressView] showErrorWithStatus:@"请求失败:未知错误" duration:0.5];
     }
 }
 
@@ -131,32 +129,6 @@ static METHOD_TYPE _methodType;
     NSString *errorMessage = error.userInfo[@"NSLocalizedDescription"];
     //[self->delegate HttpFailCallBack:errorMessage];
     [[KGProgressView windowProgressView] showWithStatus:errorMessage icon:nil duration:0.5];
-}
-
-//准备解析节点
-
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict {
-    if (([elementName isEqualToString:@"ns2:returnJson"])) {
-        isReturnFlag = true;
-        self->tempString = [NSMutableString string];
-    }
-}
-
-//获取首尾节点间内容
-
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-    
-    if (isReturnFlag) {
-        [self->tempString appendString:string];
-    }
-}
-
-//解析完当前节点
-
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
-    //    if (isReturnFlag) {
-    //        isReturnFlag = false;
-    //    }
 }
 
 //日期格式转换

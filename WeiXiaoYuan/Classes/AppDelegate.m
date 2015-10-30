@@ -168,7 +168,7 @@
             self.channelId = channelid;
             self.userId = userid;
             
-            NSString* res = [[WebServiceController shareController:nil] setChannel:channelid:userid];
+            //NSString* res = [[WebServiceController shareController:nil] setChannel:channelid:userid];
 
         }
     } else if ([BPushRequestMethod_Unbind isEqualToString:method]) {

@@ -45,8 +45,6 @@
     view.frame = self.view.frame;
     [self.view insertSubview:view atIndex:0];
     _webServiceController = [WebServiceController shareController:self.view];
-    [_webServiceController SetDalegate:self];
-    
     //wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:@"WXYLogin" accessGroup:nil];
     //NSString *userName = [wrapper objectForKey: (__bridge id)kSecAttrAccount];
  
@@ -123,10 +121,5 @@
     
     tabberViewController = [[MALTabBarViewController alloc] initWithItemModels:itemsArray defaultSelectedIndex:0];
     [self presentViewController:tabberViewController animated:YES completion:nil];
-}
--(void)HttpFailCallBack:(NSString *)errorMessage
-{
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:errorMessage delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-//    [alert show];
 }
 @end

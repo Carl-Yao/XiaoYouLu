@@ -34,8 +34,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B56DD5E816AAE68C00AD40F3"
             BuildableName = "&#x6821;&#x53cb;&#x5f55;.app"
-            BlueprintName = "WeiXiaoYuan"
-            ReferencedContainer = "container:WeiXiaoYuan.xcodeproj">
+            BlueprintName = "XiaoYouLu"
+            ReferencedContainer = "container:XiaoYouLu.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -57,8 +57,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B56DD5E816AAE68C00AD40F3"
             BuildableName = "&#x6821;&#x53cb;&#x5f55;.app"
-            BlueprintName = "WeiXiaoYuan"
-            ReferencedContainer = "container:WeiXiaoYuan.xcodeproj">
+            BlueprintName = "XiaoYouLu"
+            ReferencedContainer = "container:XiaoYouLu.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <EnvironmentVariables>
