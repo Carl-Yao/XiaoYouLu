@@ -13,6 +13,8 @@
 #import "SJAvatarBrowser.h"
 #import "UIColor+Addition.h"
 #import "UIView+ViewFrameGeometry.h"
+#import "XYLUserInfoBLL.h"
+#import "KGProgressView.h"
 
 @interface NewFriendListViewController ()
 {
@@ -64,12 +66,14 @@
     table.backgroundColor = [UIColor clearColor];
     [self.view addSubview:table];
     
-    newFriends = [[NSMutableArray alloc]init];
-    for (int i = 1; i < 8; i++) {
-        NSString* info = [[NSString alloc] init];
-        info = [NSString stringWithFormat:@"新的朋友%d",i];
-        [newFriends addObject:info];
-    }
+//    newFriends = [[NSMutableArray alloc]init];
+//    for (int i = 1; i < 8; i++) {
+//        NSString* info = [[NSString alloc] init];
+//        info = [NSString stringWithFormat:@"新的朋友%d",i];
+//        [newFriends addObject:info];
+//    }
+    
+    _webServiceController = [WebServiceController shareController:self.view];
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -91,11 +95,18 @@
         cell.contentView.backgroundColor = [UIColor clearColor];
         UIButton* receiveBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - 60, 10, 40, 20)];
         [receiveBtn setTitle:@"接受" forState:UIControlStateNormal];
+        [receiveBtn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
         receiveBtn.backgroundColor = [UIColor colorWithHexString:@"#41C9D7"];
         [cell addSubview:receiveBtn];
     }
     cell.textLabel.text = [newFriends objectAtIndex: indexPath.row];
     return cell;
+}
+
+-(void)btnAction{
+    [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/manager/absfriends/absapi/save" argsDic:@{@"userid":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username,@"friendid":@"111"} success:^(NSDictionary* dic){
+        [[KGProgressView windowProgressView] showErrorWithStatus:@"添加成功" duration:0.5];
+    }];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

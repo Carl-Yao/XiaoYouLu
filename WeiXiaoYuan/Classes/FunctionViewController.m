@@ -12,6 +12,8 @@
 #import "UIView+ViewFrameGeometry.h"
 #import "BackButton.h"
 #import "NewFriendListViewController.h"
+#import "MBProgressHUD.h"
+#import "XYLUserInfoBLL.h"
 
 @interface FunctionViewController()
 {
@@ -85,15 +87,32 @@
     table.backgroundColor = [UIColor clearColor];
     [self.view addSubview:table];
     
-    friends = [[NSMutableArray alloc]init];
-    [friends addObject:@"新的朋友"];
-    [friends addObject:@"群聊"];
-    for (int i = 1; i < 8; i++) {
-        NSString* info = [[NSString alloc] init];
-        info = [NSString stringWithFormat:@"好友%d",i];
-        [friends addObject:info];
-    }
+    _webServiceController = [WebServiceController shareController:self.view];
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.delegate setBadgeNumber:0 index:0];
+    //加未读标示
+    //dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/manager/absfriends/absapi/list" argsDic:@{@"userid":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+            NSArray* dataArr = dic[@"data"];
+            if (dataArr) {
+                friends = [[NSMutableArray alloc]init];
+                [friends addObject:@"新的朋友"];
+                [friends addObject:@"群聊"];
+                for (NSDictionary* itemDic in dataArr) {
+                    NSString *info = itemDic[@"trandate"];
+                    [friends addObject:info];
+                }
+                [table reloadData];
+            }
+            //[MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
+    //});
+}
+
 #pragma mark - Table View
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

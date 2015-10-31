@@ -8,6 +8,8 @@
 
 #import "ChangePasswordViewController.h"
 #import "WebServiceController.h"
+#import "KGProgressView.h"
+
 @interface ChangePasswordViewController ()
 
 @end
@@ -20,6 +22,8 @@
     UIImageView *view = [[UIImageView alloc] initWithImage:image];
     view.frame = self.view.frame;
     [self.view insertSubview:view atIndex:0];
+    
+    _webServiceController = [WebServiceController shareController:self.view];
     // Do any additional setup after loading the view.
 }
 
@@ -29,9 +33,18 @@
 }
 - (IBAction)okButtonPressed: (id)sender
 {
-    if (self.oldPasswordField.text.length < 6 || self.oldPasswordField.text.length > 10 || self.refreshPasswordField.text.length < 6 || self.refreshPasswordField.text.length > 10
+    if (self.refreshPasswordField.text.length < 6 || self.refreshPasswordField.text.length > 10
         ||self.repeatPasswordField.text.length < 6 || self.repeatPasswordField.text.length > 10 ) {
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"输入密码位数不合格！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }else if (self.userName.text.length < 1){
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"请输入用户名！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }else if (self.code.text.length < 1){
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"请输入验证码！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+    }else if (self.telNum.text.length != 11) {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"输入号码位数不合格！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
     }else if(![self.refreshPasswordField.text isEqualToString:self.repeatPasswordField.text])
     {
@@ -48,24 +61,42 @@
 //            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"修改失败" message:result delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
 //            [alert show];
 //        }
+        [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/absapi/register" argsDic:@{@"username":self.userName.text,@"dn":self.telNum.text,@"password":self.refreshPasswordField.text,@"code":self.code.text} success:^(NSDictionary* dic){
+            [[KGProgressView windowProgressView] showErrorWithStatus:@"发送成功" duration:0.5];
+        }];
     }
 }
 - (IBAction)cancelButtonPressed: (id)sender
 {
     [self dismissModalViewControllerAnimated:YES];
 }
+
+- (IBAction)getCode:(id)sender {
+    if (self.telNum.text.length != 11) {
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"输入号码位数不合格！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/manager/abssmscode/absapi/sendsms" argsDic:@{@"dn":self.telNum.text} success:^(NSDictionary* dic){
+        [[KGProgressView windowProgressView] showErrorWithStatus:@"发送成功" duration:0.5];
+    }];
+}
 - (IBAction)textFieldDoneEditing:(id)sender
 {
-    [self.oldPasswordField resignFirstResponder];
+    [self.userName resignFirstResponder];
     [self.refreshPasswordField resignFirstResponder];
     [self.repeatPasswordField resignFirstResponder];
+    [self.telNum resignFirstResponder];
+    [self.code resignFirstResponder];
 }
 
 - (IBAction)backgroundTap:(id)sender
 {
-    [self.oldPasswordField resignFirstResponder];
+    [self.userName resignFirstResponder];
     [self.refreshPasswordField resignFirstResponder];
     [self.repeatPasswordField resignFirstResponder];
+    [self.telNum resignFirstResponder];
+    [self.code resignFirstResponder];
 }
 
 /*

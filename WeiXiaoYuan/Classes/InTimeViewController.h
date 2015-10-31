@@ -14,6 +14,9 @@
 #import "WebServiceController.h"
 
 @interface InTimeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+{
+    WebServiceController *_webServiceController;
+}
 @property (strong,nonatomic) NSMutableArray* messages;
 @property(nonatomic,retain)AppDelegate* myAppDelegate;
 @property (strong,nonatomic) DetailForMessageViewController* detailViewController;

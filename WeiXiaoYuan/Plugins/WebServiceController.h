@@ -5,6 +5,8 @@
 //  Created by 姚振兴 on 14/11/2.
 //
 //
+#include "XYLUserInfoBLL.h"
+
 typedef enum{
     GETSERVERADDR,
     LOGIN,

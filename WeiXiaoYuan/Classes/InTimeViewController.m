@@ -176,6 +176,8 @@
         info.date = @"2015-2-3 10:31";
         [self.messages addObject:info];
     }
+    
+    _webServiceController = [WebServiceController shareController:self.view];
     [super viewDidLoad];
 }
 - (void)foucusImageFrame:(SGFocusImageFrame *)imageFrame didSelectItem:(SGFocusImageItem *)item
@@ -195,22 +197,19 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"正在处理，请稍等...";
-    NSLog(@"看耗时:viewWillAppear");
     [self.delegate setBadgeNumber:0 index:0];
-    //加未读标示
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        NSLog(@"看耗时:delegate");
-        //[self recordlist];
-        NSLog(@"看耗时:recordlist");
-        //[self updateMessages];
-        
-        [table reloadData];
-        NSLog(@"看耗时:updateMessages");
-        [MBProgressHUD hideHUDForView:self.view animated:YES];
-    });
+    [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/manager/absarticle/absapi/search" argsDic:@{@"userid":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+        NSArray* dataArr = dic[@"data"];
+        if (dataArr) {
+            messages = [[NSMutableArray alloc]init];
+            for (NSDictionary* itemDic in dataArr) {
+                NSString *info = itemDic[@"trandate"];
+                [messages addObject:info];
+            }
+            [table reloadData];
+        }
+        //[MBProgressHUD hideHUDForView:self.view animated:YES];
+    }];
 }
 
 #pragma mark - Table View

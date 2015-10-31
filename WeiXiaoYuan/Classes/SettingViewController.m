@@ -77,7 +77,7 @@
     [button addTarget:self action:@selector(btnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.view addSubview:button];
-    self.tasks = @[@[@"发起众筹",@"我参与的众筹"],@[@"接受新消息",@"检查更新"]];
+    self.tasks = @[@[@"发起众筹",@"我参与的众筹"],@[@"接受新消息"/*,@"检查更新"*/]];
     
     [super viewDidLoad];
 	//@ Do any additional setup after loading the view.
@@ -101,9 +101,9 @@
             NSDictionary* dicArg = @{@"username":infoBLL.userInfo.username,
                                      @"token":infoBLL.token};
             WebServiceController* _webServiceController = [WebServiceController shareController:self.view];
-            //[_webServiceController SendHttpRequestWithMethod:@"/addressBooks/absapi/logout" argsDic:dicArg success:^(NSDictionary* dic){
+            [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/absapi/logout" argsDic:dicArg success:^(NSDictionary* dic){
                 [weakSelf dismissModalViewControllerAnimated:YES];
-            //}];
+            }];
         }else if(alertView.tag == 1002)
         {
             [self clearCache];

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "WebServiceController.h"
 
 @interface NewFriendListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
-
+{
+    WebServiceController *_webServiceController;
+}
 @end
