@@ -39,6 +39,9 @@
 		066BD62F1BDA490800D1F5A4 /* KGSquareLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 066BD62E1BDA490800D1F5A4 /* KGSquareLoadingView.m */; };
 		06F4A08C1BC689D10035D798 /* ktv_ksong_searchbtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 06F4A08B1BC689D10035D798 /* ktv_ksong_searchbtn.png */; };
 		5D07C0391A2F93B3006884FD /* SFHFKeychainUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D07C0371A2F93B3006884FD /* SFHFKeychainUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		5D10155F1BE4AA85000C9C46 /* SearchFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D10155E1BE4AA85000C9C46 /* SearchFriendViewController.m */; };
+		5D1015621BE4ACEC000C9C46 /* KTVInsetsTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1015611BE4ACEC000C9C46 /* KTVInsetsTextField.m */; };
+		5D1015651BE4C44C000C9C46 /* PersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D1015641BE4C44C000C9C46 /* PersonInfoViewController.m */; };
 		5D190B4B1A3F04EB0040CF20 /* IQActionSheetPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D190B481A3F04EB0040CF20 /* IQActionSheetPickerView.m */; };
 		5D190B4C1A3F04EB0040CF20 /* IQActionSheetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D190B4A1A3F04EB0040CF20 /* IQActionSheetViewController.m */; };
 		5D1CEC8E1A6987CB0086CDF9 /* libBPush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D1CEC7F1A6987CB0086CDF9 /* libBPush.a */; };
@@ -65,6 +68,15 @@
 		5D362AFF1A8A6C82002BDDA9 /* DBImageViewCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D362AFB1A8A6C82002BDDA9 /* DBImageViewCache.m */; };
 		5D3CACAD1A49C29C0009DE83 /* FileManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D3CACAC1A49C29C0009DE83 /* FileManagement.m */; };
 		5D5EBDC41A57EC4300B7902C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5EBDC31A57EC4300B7902C /* AVFoundation.framework */; };
+		5D6A56801BE4D1C7001E2EB1 /* EditProperyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6A567F1BE4D1C7001E2EB1 /* EditProperyViewController.m */; };
+		5D6A56831BE5205E001E2EB1 /* WenZhangViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6A56821BE5205E001E2EB1 /* WenZhangViewController.m */; };
+		5D6A56881BE53628001E2EB1 /* KGProgress_error.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D6A56841BE53628001E2EB1 /* KGProgress_error.png */; };
+		5D6A56891BE53628001E2EB1 /* KGProgress_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D6A56851BE53628001E2EB1 /* KGProgress_error@2x.png */; };
+		5D6A568A1BE53628001E2EB1 /* KGProgress_success.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D6A56861BE53628001E2EB1 /* KGProgress_success.png */; };
+		5D6A568B1BE53628001E2EB1 /* KGProgress_success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D6A56871BE53628001E2EB1 /* KGProgress_success@2x.png */; };
+		5D6A568E1BE5CA5C001E2EB1 /* XYLCommonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6A568D1BE5CA5C001E2EB1 /* XYLCommonTableViewCell.m */; };
+		5D6A56921BE5DF0D001E2EB1 /* SliderSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6A56911BE5DF0C001E2EB1 /* SliderSwitch.m */; };
+		5D6A56961BE5F37E001E2EB1 /* KTVDateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6A56951BE5F37E001E2EB1 /* KTVDateFormatter.m */; };
 		5D7E19FC1A7BE981005395AC /* icon_home_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D7E19F81A7BE981005395AC /* icon_home_sel.png */; };
 		5D7E19FD1A7BE981005395AC /* icon_meassage_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D7E19F91A7BE981005395AC /* icon_meassage_sel.png */; };
 		5D7E19FE1A7BE981005395AC /* icon_selfinfo_sel.png in Resources */ = {isa = PBXBuildFile; fileRef = 5D7E19FA1A7BE981005395AC /* icon_selfinfo_sel.png */; };
@@ -508,6 +520,12 @@
 		06F4A08B1BC689D10035D798 /* ktv_ksong_searchbtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ktv_ksong_searchbtn.png; sourceTree = "<group>"; };
 		5D07C0371A2F93B3006884FD /* SFHFKeychainUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SFHFKeychainUtils.m; sourceTree = "<group>"; };
 		5D07C0381A2F93B3006884FD /* SFHFKeychainUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SFHFKeychainUtils.h; sourceTree = "<group>"; };
+		5D10155D1BE4AA85000C9C46 /* SearchFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchFriendViewController.h; sourceTree = "<group>"; };
+		5D10155E1BE4AA85000C9C46 /* SearchFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchFriendViewController.m; sourceTree = "<group>"; };
+		5D1015601BE4ACEC000C9C46 /* KTVInsetsTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVInsetsTextField.h; sourceTree = "<group>"; };
+		5D1015611BE4ACEC000C9C46 /* KTVInsetsTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTVInsetsTextField.m; sourceTree = "<group>"; };
+		5D1015631BE4C44C000C9C46 /* PersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonInfoViewController.h; sourceTree = "<group>"; };
+		5D1015641BE4C44C000C9C46 /* PersonInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonInfoViewController.m; sourceTree = "<group>"; };
 		5D190B471A3F04EB0040CF20 /* IQActionSheetPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQActionSheetPickerView.h; sourceTree = "<group>"; };
 		5D190B481A3F04EB0040CF20 /* IQActionSheetPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQActionSheetPickerView.m; sourceTree = "<group>"; };
 		5D190B491A3F04EB0040CF20 /* IQActionSheetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IQActionSheetViewController.h; sourceTree = "<group>"; };
@@ -550,6 +568,20 @@
 		5D3CACAB1A49C29C0009DE83 /* FileManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileManagement.h; sourceTree = "<group>"; };
 		5D3CACAC1A49C29C0009DE83 /* FileManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileManagement.m; sourceTree = "<group>"; };
 		5D5EBDC31A57EC4300B7902C /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5D6A567E1BE4D1C7001E2EB1 /* EditProperyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProperyViewController.h; sourceTree = "<group>"; };
+		5D6A567F1BE4D1C7001E2EB1 /* EditProperyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProperyViewController.m; sourceTree = "<group>"; };
+		5D6A56811BE5205E001E2EB1 /* WenZhangViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WenZhangViewController.h; sourceTree = "<group>"; };
+		5D6A56821BE5205E001E2EB1 /* WenZhangViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WenZhangViewController.m; sourceTree = "<group>"; };
+		5D6A56841BE53628001E2EB1 /* KGProgress_error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KGProgress_error.png; sourceTree = "<group>"; };
+		5D6A56851BE53628001E2EB1 /* KGProgress_error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KGProgress_error@2x.png"; sourceTree = "<group>"; };
+		5D6A56861BE53628001E2EB1 /* KGProgress_success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KGProgress_success.png; sourceTree = "<group>"; };
+		5D6A56871BE53628001E2EB1 /* KGProgress_success@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "KGProgress_success@2x.png"; sourceTree = "<group>"; };
+		5D6A568C1BE5CA5C001E2EB1 /* XYLCommonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XYLCommonTableViewCell.h; sourceTree = "<group>"; };
+		5D6A568D1BE5CA5C001E2EB1 /* XYLCommonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XYLCommonTableViewCell.m; sourceTree = "<group>"; };
+		5D6A56901BE5DF0C001E2EB1 /* SliderSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderSwitch.h; sourceTree = "<group>"; };
+		5D6A56911BE5DF0C001E2EB1 /* SliderSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderSwitch.m; sourceTree = "<group>"; };
+		5D6A56941BE5F37D001E2EB1 /* KTVDateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTVDateFormatter.h; sourceTree = "<group>"; };
+		5D6A56951BE5F37E001E2EB1 /* KTVDateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTVDateFormatter.m; sourceTree = "<group>"; };
 		5D7E19F81A7BE981005395AC /* icon_home_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_home_sel.png; sourceTree = "<group>"; };
 		5D7E19F91A7BE981005395AC /* icon_meassage_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_meassage_sel.png; sourceTree = "<group>"; };
 		5D7E19FA1A7BE981005395AC /* icon_selfinfo_sel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_selfinfo_sel.png; sourceTree = "<group>"; };
@@ -1123,6 +1155,8 @@
 		0650732D1BC66C5700DD21CC /* commontools */ = {
 			isa = PBXGroup;
 			children = (
+				5D1015601BE4ACEC000C9C46 /* KTVInsetsTextField.h */,
+				5D1015611BE4ACEC000C9C46 /* KTVInsetsTextField.m */,
 				0650733F1BC66C5700DD21CC /* KGFont.h */,
 				065073401BC66C5700DD21CC /* KGFont.m */,
 				065073411BC66C5700DD21CC /* KGStatisticalTime.h */,
@@ -1220,6 +1254,24 @@
 			path = DBImageView;
 			sourceTree = "<group>";
 		};
+		5D6A568F1BE5DEEA001E2EB1 /* SliderSwitch */ = {
+			isa = PBXGroup;
+			children = (
+				5D6A56901BE5DF0C001E2EB1 /* SliderSwitch.h */,
+				5D6A56911BE5DF0C001E2EB1 /* SliderSwitch.m */,
+			);
+			name = SliderSwitch;
+			sourceTree = "<group>";
+		};
+		5D6A56931BE5F34D001E2EB1 /* FormatDate */ = {
+			isa = PBXGroup;
+			children = (
+				5D6A56941BE5F37D001E2EB1 /* KTVDateFormatter.h */,
+				5D6A56951BE5F37E001E2EB1 /* KTVDateFormatter.m */,
+			);
+			name = FormatDate;
+			sourceTree = "<group>";
+		};
 		5D7EC6501A4D82D10058EA41 /* XHImageViewer */ = {
 			isa = PBXGroup;
 			children = (
@@ -1277,6 +1329,10 @@
 		5DCA49BD1A38C50600FA00BF /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5D6A56841BE53628001E2EB1 /* KGProgress_error.png */,
+				5D6A56851BE53628001E2EB1 /* KGProgress_error@2x.png */,
+				5D6A56861BE53628001E2EB1 /* KGProgress_success.png */,
+				5D6A56871BE53628001E2EB1 /* KGProgress_success@2x.png */,
 				06F4A08B1BC689D10035D798 /* ktv_ksong_searchbtn.png */,
 				5D93D6941ABEBAB2003A414B /* top_bj.9.jpg */,
 				5D7E1A001A7BFA30005395AC /* tabbar_background_os7@2x.png */,
@@ -1648,6 +1704,8 @@
 				5DD5909A1A2624AF004DFDAD /* LoginViewController.m */,
 				5DD5909F1A2624AF004DFDAD /* SettingViewController.h */,
 				5DD590A01A2624AF004DFDAD /* SettingViewController.m */,
+				5D6A56811BE5205E001E2EB1 /* WenZhangViewController.h */,
+				5D6A56821BE5205E001E2EB1 /* WenZhangViewController.m */,
 				5DD590A11A2624AF004DFDAD /* Storyboard.storyboard */,
 				5DD590A21A2624AF004DFDAD /* TabbarViewController.h */,
 				5DD590A31A2624AF004DFDAD /* TabbarViewController.m */,
@@ -1665,6 +1723,14 @@
 				5DA085081BCEE7930076E1CF /* MyJoinZCViewController.m */,
 				5DA0850A1BCEEB800076E1CF /* PublishZCViewController.h */,
 				5DA0850B1BCEEB800076E1CF /* PublishZCViewController.m */,
+				5D10155D1BE4AA85000C9C46 /* SearchFriendViewController.h */,
+				5D10155E1BE4AA85000C9C46 /* SearchFriendViewController.m */,
+				5D1015631BE4C44C000C9C46 /* PersonInfoViewController.h */,
+				5D1015641BE4C44C000C9C46 /* PersonInfoViewController.m */,
+				5D6A567E1BE4D1C7001E2EB1 /* EditProperyViewController.h */,
+				5D6A567F1BE4D1C7001E2EB1 /* EditProperyViewController.m */,
+				5D6A568C1BE5CA5C001E2EB1 /* XYLCommonTableViewCell.h */,
+				5D6A568D1BE5CA5C001E2EB1 /* XYLCommonTableViewCell.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1699,6 +1765,8 @@
 		5DD590B51A262AE4004DFDAD /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				5D6A56931BE5F34D001E2EB1 /* FormatDate */,
+				5D6A568F1BE5DEEA001E2EB1 /* SliderSwitch */,
 				062711E31BE07D9C00824942 /* JSONModel */,
 				066BD6291BDA483000D1F5A4 /* KGProgressView */,
 				5D1CEC7D1A6987CB0086CDF9 /* LibBPush */,
@@ -1984,6 +2052,7 @@
 				5DCA4E631A38C50900FA00BF /* menu_bg_normal2.9.png in Resources */,
 				5DCA4DDC1A38C50900FA00BF /* btn1.png in Resources */,
 				5DCA4DD51A38C50900FA00BF /* bj2.jpg in Resources */,
+				5D6A568A1BE53628001E2EB1 /* KGProgress_success.png in Resources */,
 				5DCA4DC81A38C50900FA00BF /* base_actionbar_bg.9.png in Resources */,
 				5DCA4DF41A38C50900FA00BF /* btn_style_one_disabled.9.png in Resources */,
 				5DCA4E571A38C50900FA00BF /* main_parent_education.png in Resources */,
@@ -2066,6 +2135,7 @@
 				5DCA4DC91A38C50900FA00BF /* base_actionbar_bg2.9.png in Resources */,
 				5DD198D61A773FF500EE1F3E /* icon-Small.png in Resources */,
 				5DCA4E011A38C50900FA00BF /* button_normal_false2.png in Resources */,
+				5D6A568B1BE53628001E2EB1 /* KGProgress_success@2x.png in Resources */,
 				5DCA4E4F1A38C50900FA00BF /* main_education_information.png in Resources */,
 				5DCA4E371A38C50900FA00BF /* icon_selfinfo_sel1.png in Resources */,
 				5DCA4E7D1A38C50900FA00BF /* mm_title_btn_qrcode_normal.png in Resources */,
@@ -2104,9 +2174,11 @@
 				5DCA4DFF1A38C50900FA00BF /* button_login_unpressed.9.png in Resources */,
 				5DCA4E191A38C50900FA00BF /* divider_horizontal_line.png in Resources */,
 				5DCA4E771A38C50900FA00BF /* mm_title_btn_focused.9.png in Resources */,
+				5D6A56891BE53628001E2EB1 /* KGProgress_error@2x.png in Resources */,
 				5DCA4E7E1A38C50900FA00BF /* mm_title_btn_receiver_normal.png in Resources */,
 				5DCA4DE01A38C50900FA00BF /* btn22.png in Resources */,
 				5DCA4DF81A38C50900FA00BF /* btn_style_two_focused.9.png in Resources */,
+				5D6A56881BE53628001E2EB1 /* KGProgress_error.png in Resources */,
 				5DCA4E711A38C50900FA00BF /* mm_submenu_pressed.png in Resources */,
 				5DD198D71A773FF500EE1F3E /* icon-Small@2x.png in Resources */,
 				5DCA4E321A38C50900FA00BF /* icon_more_nor.png in Resources */,
@@ -2288,6 +2360,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DD5910D1A262AE4004DFDAD /* EasyJSWebView.m in Sources */,
+				5D6A568E1BE5CA5C001E2EB1 /* XYLCommonTableViewCell.m in Sources */,
 				5D7EC6651A4D82D10058EA41 /* XHFileAttribute.m in Sources */,
 				5DD590A51A2624AF004DFDAD /* AppDelegate.m in Sources */,
 				0650736C1BC66C5700DD21CC /* UIDevice+Resolutions.m in Sources */,
@@ -2309,6 +2382,7 @@
 				5D857C081A8E8B4A002E83AD /* ClickImage.m in Sources */,
 				065073651BC66C5700DD21CC /* KGStatisticalTime.m in Sources */,
 				5D1CEC911A6987CB0086CDF9 /* GzipCompressor.m in Sources */,
+				5D1015621BE4ACEC000C9C46 /* KTVInsetsTextField.m in Sources */,
 				5DD5911C1A262AE4004DFDAD /* MBProgressHUD.m in Sources */,
 				5DD591071A262AE4004DFDAD /* ASINetworkQueue.m in Sources */,
 				5DD591091A262AE4004DFDAD /* ASIWebPageRequest.m in Sources */,
@@ -2325,6 +2399,7 @@
 				065073711BC66C5700DD21CC /* UserHandle.m in Sources */,
 				5D1CEC8F1A6987CB0086CDF9 /* Base64.m in Sources */,
 				5DD199001A7BC0E000EE1F3E /* MALTabBarViewController.m in Sources */,
+				5D10155F1BE4AA85000C9C46 /* SearchFriendViewController.m in Sources */,
 				065073681BC66C5700DD21CC /* NSString+SHA.m in Sources */,
 				062712051BE07D9C00824942 /* JSONKeyMapper.m in Sources */,
 				0650736D1BC66C5700DD21CC /* UIDevice-Hardware.m in Sources */,
@@ -2356,6 +2431,7 @@
 				5D7EC6631A4D82D10058EA41 /* UIImageView+XHURLDownload.m in Sources */,
 				5D7EC6741A4FFFE80058EA41 /* ChangePasswordViewController.m in Sources */,
 				5D1CEC9D1A6A5BD40086CDF9 /* WeiXiaoYuan.xcdatamodeld in Sources */,
+				5D1015651BE4C44C000C9C46 /* PersonInfoViewController.m in Sources */,
 				5DD591021A262AE4004DFDAD /* ASIDataDecompressor.m in Sources */,
 				5D07C0391A2F93B3006884FD /* SFHFKeychainUtils.m in Sources */,
 				5DD590A41A2624AF004DFDAD /* AppButton.m in Sources */,
@@ -2377,14 +2453,18 @@
 				5DD591111A262AE4004DFDAD /* SBJsonParser.m in Sources */,
 				5DD590AD1A2624AF004DFDAD /* LoginViewController.m in Sources */,
 				0627120C1BE07FC500824942 /* XYLUserInfo.m in Sources */,
+				5D6A56961BE5F37E001E2EB1 /* KTVDateFormatter.m in Sources */,
 				5DD198EF1A77EBE500EE1F3E /* User.m in Sources */,
 				0650736B1BC66C5700DD21CC /* UIColor+Addition.m in Sources */,
 				5DD591151A262AE4004DFDAD /* SBJsonStreamParserState.m in Sources */,
 				5DD591191A262AE4004DFDAD /* SBJsonTokeniser.m in Sources */,
+				5D6A56921BE5DF0D001E2EB1 /* SliderSwitch.m in Sources */,
 				5DD591041A262AE4004DFDAD /* ASIFormDataRequest.m in Sources */,
 				5DD591051A262AE4004DFDAD /* ASIHTTPRequest.m in Sources */,
+				5D6A56801BE4D1C7001E2EB1 /* EditProperyViewController.m in Sources */,
 				5D7EC6641A4D82D10058EA41 /* XHCacheManager.m in Sources */,
 				062712001BE07D9C00824942 /* JSONModelError.m in Sources */,
+				5D6A56831BE5205E001E2EB1 /* WenZhangViewController.m in Sources */,
 				5D362AFD1A8A6C82002BDDA9 /* DBImageRequest.m in Sources */,
 				5DCA49B31A388B7D00FA00BF /* UserManager.m in Sources */,
 				5DD591031A262AE4004DFDAD /* ASIDownloadCache.m in Sources */,
@@ -2482,8 +2562,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xiaohui Li (W2F8MHPWQ6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiaohui Li (W2F8MHPWQ6)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Xiaohui Li (P7A4522652)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Xiaohui Li (P7A4522652)";
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2512,8 +2592,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Xiaohui Li (W2F8MHPWQ6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiaohui Li (W2F8MHPWQ6)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Xiaohui Li (P7A4522652)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Xiaohui Li (P7A4522652)";
 				COMPRESS_PNG_FILES = NO;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

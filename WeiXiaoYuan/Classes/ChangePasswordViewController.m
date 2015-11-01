@@ -35,7 +35,7 @@
 {
     if (self.refreshPasswordField.text.length < 6 || self.refreshPasswordField.text.length > 10
         ||self.repeatPasswordField.text.length < 6 || self.repeatPasswordField.text.length > 10 ) {
-        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"输入密码位数不合格！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"输入密码位数不合格！(6~10位)" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
     }else if (self.userName.text.length < 1){
         UIAlertView* alert = [[UIAlertView alloc]initWithTitle:nil message:@"请输入用户名！" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -61,8 +61,9 @@
 //            UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"修改失败" message:result delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil];
 //            [alert show];
 //        }
-        [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/absapi/register" argsDic:@{@"username":self.userName.text,@"dn":self.telNum.text,@"password":self.refreshPasswordField.text,@"code":self.code.text} success:^(NSDictionary* dic){
-            [[KGProgressView windowProgressView] showErrorWithStatus:@"发送成功" duration:0.5];
+        [_webServiceController SendHttpRequestWithMethod:@"/absapi/register" argsDic:@{@"username":self.userName.text,@"dn":self.telNum.text,@"password":self.refreshPasswordField.text,@"code":self.code.text} success:^(NSDictionary* dic){
+            [self dismissModalViewControllerAnimated:YES];
+            [[KGProgressView windowProgressView] showErrorWithStatus:@"注册成功" duration:0.5];
         }];
     }
 }
@@ -77,7 +78,7 @@
         [alert show];
         return;
     }
-    [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/manager/abssmscode/absapi/sendsms" argsDic:@{@"dn":self.telNum.text} success:^(NSDictionary* dic){
+    [_webServiceController SendHttpRequestWithMethod:@"/manager/abssmscode/absapi/sendsms" argsDic:@{@"dn":self.telNum.text} success:^(NSDictionary* dic){
         [[KGProgressView windowProgressView] showErrorWithStatus:@"发送成功" duration:0.5];
     }];
 }

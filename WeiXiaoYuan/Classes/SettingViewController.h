@@ -13,7 +13,7 @@
 #import "MALTabBarChinldVIewControllerDelegate.h"
 
 
-@interface SettingViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
+@interface SettingViewController : UIViewController <UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate,UIGestureRecognizerDelegate>
 {
     IBOutlet UITableView *tableView;
 }

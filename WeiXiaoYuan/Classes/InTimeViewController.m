@@ -7,8 +7,6 @@
 //
 
 #import "InTimeViewController.h"
-#import "User.h"
-#import "SBJson.h"
 #import "DBImageView.h"
 #import "MBProgressHUD.h"
 #import "SGFocusImageItem.h"
@@ -17,6 +15,7 @@
 #import "UIView+ViewFrameGeometry.h"
 #import "DKScrollingTabController.h"
 #import "RecommendInfo.h"
+#import "KGProgressView.h"
 
 @interface InTimeViewController ()<SGFocusImageFrameDelegate>
 {
@@ -31,7 +30,6 @@
 @synthesize messages;
 @synthesize detailViewController;
 @synthesize delegate;
-@synthesize webServiceController;
 
 - (void)viewDidLoad
 {
@@ -161,11 +159,9 @@
     table = [[UITableView alloc] initWithFrame:CGRectMake(0, bannerView.bottom, self.view.frame.size.width, self.view.frame.size.height - bannerView.bottom -50) style:UITableViewStylePlain];
     table.delegate = self;
     table.dataSource = self;
-    table.separatorStyle = UITableViewCellSeparatorStyleNone;
+    table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     table.backgroundColor = [UIColor clearColor];
     [self.view addSubview:table];
-    
-    _myAppDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
     
     self.messages = [[NSMutableArray alloc]init];
     for (int i = 1; i < 6; i++) {
@@ -178,6 +174,7 @@
     }
     
     _webServiceController = [WebServiceController shareController:self.view];
+    
     [super viewDidLoad];
 }
 - (void)foucusImageFrame:(SGFocusImageFrame *)imageFrame didSelectItem:(SGFocusImageItem *)item
@@ -198,7 +195,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.delegate setBadgeNumber:0 index:0];
-    [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/manager/absarticle/absapi/search" argsDic:@{@"userid":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+    [_webServiceController SendHttpRequestWithMethod:@"/manager/absarticle/absapi/search" argsDic:@{@"userid":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
         NSArray* dataArr = dic[@"data"];
         if (dataArr) {
             messages = [[NSMutableArray alloc]init];
@@ -317,7 +314,6 @@
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [_myAppDelegate del:((User*)(self.messages[indexPath.row])).pushID];
     [self.messages removeObjectAtIndex:indexPath.row];
     [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -332,8 +328,7 @@
 - (void)DKScrollingTabController:(DKScrollingTabController *)controller selection:(NSUInteger)selection {
     NSLog(@"Selection controller action button with index=%d",selection);
     selectIndex = selection;
-    
-    
+    [[KGProgressView windowProgressView] showErrorWithStatus:@"请求失败" duration:0.5];
 }
 
 @end

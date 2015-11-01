@@ -12,10 +12,8 @@ typedef enum{
     LOGIN,
     Other
 }METHOD_TYPE;
-@protocol HttpCallbackDelegate
--(void)HttpSuccessDictionaryCallBack:(NSString *)result;
-@end
 typedef void (^successDictionaryBlock) (NSDictionary *responseDic);
+typedef void (^failBlock) (NSError *error);
 @interface WebServiceController:NSObject
 {
 @private
@@ -25,7 +23,7 @@ typedef void (^successDictionaryBlock) (NSDictionary *responseDic);
     UIView *currentView;
     NSString *appServiceUrl;
     successDictionaryBlock successDicBlock;
-    id<HttpCallbackDelegate> delegate;
+    failBlock failErrorBlock;
     NSString *name;
     NSString *password;
 }

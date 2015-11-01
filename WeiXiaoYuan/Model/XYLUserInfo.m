@@ -9,5 +9,10 @@
 #import "XYLUserInfo.h"
 
 @implementation XYLUserInfo
-
++(JSONKeyMapper*)keyMapper
+{
+    return [[JSONKeyMapper alloc] initWithDictionary:@{
+                                                       @"id": @"userid"
+                                                       }];
+}
 @end

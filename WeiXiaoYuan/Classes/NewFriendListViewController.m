@@ -15,11 +15,13 @@
 #import "UIView+ViewFrameGeometry.h"
 #import "XYLUserInfoBLL.h"
 #import "KGProgressView.h"
+#import "PersonInfoViewController.h"
 
 @interface NewFriendListViewController ()
 {
     UITableView *table;
     NSMutableArray* newFriends;
+    NSMutableArray* dataArr;
 }
 @end
 
@@ -77,6 +79,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [_webServiceController SendHttpRequestWithMethod:@"/absapi/absfriends/list" argsDic:@{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"searchArea":@"1", @"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+        dataArr = dic[@"data"];
+        if (dataArr) {
+            newFriends = [[NSMutableArray alloc]init];
+            for (NSDictionary* itemDic in dataArr) {
+                NSString *info = itemDic[@"friendsName"]?:@"null";
+                [newFriends addObject:info];
+            }
+            [table reloadData];
+        }
+        //[MBProgressHUD hideHUDForView:self.view animated:YES];
+    }];
+}
 #pragma mark - Table View
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -95,7 +112,8 @@
         cell.contentView.backgroundColor = [UIColor clearColor];
         UIButton* receiveBtn = [[UIButton alloc] initWithFrame:CGRectMake(self.view.width - 60, 10, 40, 20)];
         [receiveBtn setTitle:@"接受" forState:UIControlStateNormal];
-        [receiveBtn addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
+        receiveBtn.tag = indexPath.row;
+        [receiveBtn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
         receiveBtn.backgroundColor = [UIColor colorWithHexString:@"#41C9D7"];
         [cell addSubview:receiveBtn];
     }
@@ -103,18 +121,19 @@
     return cell;
 }
 
--(void)btnAction{
-    [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/manager/absfriends/absapi/save" argsDic:@{@"userid":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username,@"friendid":@"111"} success:^(NSDictionary* dic){
-        [[KGProgressView windowProgressView] showErrorWithStatus:@"添加成功" duration:0.5];
+-(void)btnAction:(id)sender{
+    UIButton* btn = sender;
+    [_webServiceController SendHttpRequestWithMethod:@"/absapi/absfriends/save" argsDic:@{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"friendsId":dataArr[btn.tag][@"friendsId"],@"type":@"1",@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+        [[KGProgressView windowProgressView] showErrorWithStatus:@"接受成功" duration:0.5];
     }];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0){
-        NewFriendListViewController* vc = [[NewFriendListViewController alloc] init];
-        [self presentViewController:vc animated:YES completion:nil];
-    }
+    PersonInfoViewController* vc = [[PersonInfoViewController alloc] init];
+    vc.isOwn = NO;
+    vc.userId = dataArr[indexPath.row][@"friendsId"];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

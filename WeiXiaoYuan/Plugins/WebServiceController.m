@@ -15,6 +15,7 @@
 #import "UserManager.h"
 #import "StringTool.h"
 #import "KGProgressView.h"
+#import "KTVDateFormatter.h"
 
 static WebServiceController* _instance = nil;
 static METHOD_TYPE _methodType;
@@ -27,7 +28,7 @@ static METHOD_TYPE _methodType;
         if ((obj=[super init]) != nil) {
             //初始化
             self->currentView = view;
-            self->appServiceUrl = @"http://123.56.146.233:8081";
+            self->appServiceUrl = @"http://123.57.11.237:8081";
         }
     });
     self = obj;
@@ -55,6 +56,12 @@ static METHOD_TYPE _methodType;
 + (id)copyWithZone:(struct _NSZone *)zone
 {
     return _instance;
+}
+
+- (void)SendHttpRequestWithMethod:(NSString*)methodName argsDic:(NSDictionary*)argsDic success:(successDictionaryBlock)successBlock fail:(failBlock)failBlock
+{
+    failErrorBlock = failBlock;
+    [self SendHttpRequestWithMethod:methodName argsDic:argsDic success:successBlock];
 }
 
 - (void)SendHttpRequestWithMethod:(NSString*)methodName argsDic:(NSDictionary*)argsDic success:(successDictionaryBlock)successBlock
@@ -107,7 +114,7 @@ static METHOD_TYPE _methodType;
         }
         
         if (retDic) {
-            if ([retDic[@"message"] isEqualToString:@"success"]){
+            if ([retDic[@"message"] isEqualToString:@"success"] || [retDic[@"resultcode"] isEqualToString:@"0"]){
                 successDicBlock(retDic);
             }else{
                 [[KGProgressView windowProgressView] showErrorWithStatus:@"请求失败" duration:0.5];

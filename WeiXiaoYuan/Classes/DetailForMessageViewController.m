@@ -76,13 +76,13 @@
     //布局显示内容
     CGFloat heightLayout = 64;
     
-    UIImageView *showImg = [[UIImageView alloc] init];
-    showImg.backgroundColor = [UIColor grayColor];
-    showImg.frame = CGRectMake(0, view.bottom, self.view.frame.size.width, 200);
-    [self.view addSubview:showImg];
+//    UIImageView *showImg = [[UIImageView alloc] init];
+//    showImg.backgroundColor = [UIColor grayColor];
+//    showImg.frame = CGRectMake(0, view.bottom, self.view.frame.size.width, 200);
+//    [self.view addSubview:showImg];
     
-    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(10, showImg.bottom+10, self.view.frame.size.width-20, 30)];
-    label.text = [NSString stringWithFormat:@"  %@:%@", recommendInfo.title, recommendInfo.content];
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(10, view.bottom+10, self.view.frame.size.width-20, 30)];
+    label.text = [NSString stringWithFormat:@"  %@", recommendInfo.content];
     label.textAlignment = NSTextAlignmentLeft;
     label.font = [UIFont systemFontOfSize:15];
     //label.textColor = [UIColor greenColor];
@@ -113,19 +113,19 @@
     
     
     //列表
-    table = [[UITableView alloc] initWithFrame:CGRectMake(0, dateLabel.bottom+10, self.view.frame.size.width, self.view.frame.size.height - dateLabel.bottom) style:UITableViewStylePlain];
-    table.delegate = self;
-    table.dataSource = self;
-    table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    table.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:table];
-    
-    joinPeoples = [[NSMutableArray alloc]init];
-    for (int i = 1; i < 8; i++) {
-        NSString* info = [[NSString alloc] init];
-        info = [NSString stringWithFormat:@"参与人%d",i];
-        [joinPeoples addObject:info];
-    }
+//    table = [[UITableView alloc] initWithFrame:CGRectMake(0, dateLabel.bottom+10, self.view.frame.size.width, self.view.frame.size.height - dateLabel.bottom) style:UITableViewStylePlain];
+//    table.delegate = self;
+//    table.dataSource = self;
+//    table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+//    table.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:table];
+//    
+//    joinPeoples = [[NSMutableArray alloc]init];
+//    for (int i = 1; i < 8; i++) {
+//        NSString* info = [[NSString alloc] init];
+//        info = [NSString stringWithFormat:@"参与人%d",i];
+//        [joinPeoples addObject:info];
+//    }
 
     
     //            if (userMessages.pushImage)
@@ -185,7 +185,7 @@
 #pragma mark - Table View
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [joinPeoples count];
+    return 0;//[joinPeoples count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

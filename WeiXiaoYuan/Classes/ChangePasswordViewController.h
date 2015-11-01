@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "WebServiceController.h"
 
-@interface ChangePasswordViewController : UIViewController{
+@interface ChangePasswordViewController : UIViewController
+{
     WebServiceController* _webServiceController;
 }
 - (IBAction)okButtonPressed: (id)sender;

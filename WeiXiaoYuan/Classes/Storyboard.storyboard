@@ -90,7 +90,7 @@
                         <outlet property="nameField" destination="pNb-zh-bOk" id="bR5-sr-VDl"/>
                         <outlet property="numberField" destination="EX2-Jh-kpQ" id="yfR-o8-XKa"/>
                         <segue destination="VBI-9T-YEM" kind="modal" identifier="LoginToMain" id="dmR-Se-OZr"/>
-                        <segue destination="ieu-xj-y2R" kind="modal" identifier="MainToChangePassword" id="Nky-WO-diX"/>
+                        <segue destination="ieu-xj-y2R" kind="modal" identifier="MainToRegister" id="Nky-WO-diX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bip-nF-Xi4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -113,7 +113,7 @@
                                 <rect key="frame" x="48" y="101" width="224" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                 <connections>
                                     <action selector="textFieldDoneEditing:" destination="ieu-xj-y2R" eventType="editingDidEnd" id="1ir-qV-iBK"/>
                                     <action selector="textFieldDoneEditing:" destination="ieu-xj-y2R" eventType="editingDidEndOnExit" id="cXa-es-nCe"/>
@@ -140,7 +140,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="手机号码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vwh-ge-HIf">
                                 <rect key="frame" x="48" y="233" width="224" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
                                     <action selector="textFieldDoneEditing:" destination="ieu-xj-y2R" eventType="editingDidEndOnExit" id="RJH-KG-trK"/>
                                     <action selector="textFieldDoneEditing:" destination="ieu-xj-y2R" eventType="editingDidEnd" id="pMj-eq-QsL"/>
@@ -149,7 +149,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="验证码" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CDf-4h-dkB">
                                 <rect key="frame" x="48" y="278" width="116" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
                                     <action selector="textFieldDoneEditing:" destination="ieu-xj-y2R" eventType="editingDidEndOnExit" id="38x-VH-hVk"/>
                                     <action selector="textFieldDoneEditing:" destination="ieu-xj-y2R" eventType="editingDidEnd" id="UN5-qD-lnJ"/>
@@ -199,7 +199,6 @@
                     <navigationItem key="navigationItem" id="wip-lX-t6O"/>
                     <connections>
                         <outlet property="code" destination="CDf-4h-dkB" id="0SX-Fe-U7G"/>
-                        <outlet property="oldPasswordField" destination="OnH-ve-M6F" id="Goi-Kl-PJ8"/>
                         <outlet property="refreshPasswordField" destination="7O8-nh-shV" id="1RS-ad-DAD"/>
                         <outlet property="repeatPasswordField" destination="nvj-wO-jsc" id="xxo-85-DJw"/>
                         <outlet property="telNum" destination="Vwh-ge-HIf" id="bMf-Ep-sik"/>
@@ -208,7 +207,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLf-fQ-vxj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-967" y="1089"/>
+            <point key="canvasLocation" x="-977" y="1125"/>
         </scene>
         <!--及时-->
         <scene sceneID="ohw-rf-lMX">
@@ -221,13 +220,44 @@
                     <view key="view" contentMode="scaleToFill" id="QpN-nk-84Y">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d2s-1G-iZt">
+                                <rect key="frame" x="98" y="-232" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="及时" image="icon_meassage_nor.png" id="hlU-rS-Xl4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3lg-zv-Ura" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-88" y="102"/>
+            <point key="canvasLocation" x="-88" y="37"/>
+        </scene>
+        <!--文章-->
+        <scene sceneID="9BE-2B-95t">
+            <objects>
+                <viewController id="2m1-PU-zbS" userLabel="文章" customClass="InTimeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NKg-ou-D9a"/>
+                        <viewControllerLayoutGuide type="bottom" id="LJs-bn-vN9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="FIE-Rd-yYZ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hFo-q9-9Hn">
+                                <rect key="frame" x="98" y="-232" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="文章" image="icon_square_nor.png" id="cEL-Iv-b1X"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nIQ-pG-XaM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-245" y="119"/>
         </scene>
         <!--Tabbar View Controller-->
         <scene sceneID="PGw-RO-lkq">
@@ -278,7 +308,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Dn-8f-dzQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-967" y="-265"/>
+            <point key="canvasLocation" x="-977" y="-281"/>
         </scene>
         <!--设置-->
         <scene sceneID="024-T4-JPY">
@@ -304,9 +334,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="ieu-xj-y2R" kind="modal" identifier="" id="ppE-dn-Vro"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="OtR-4e-jaw">
                                         <rect key="frame" x="0.0" y="93.5" width="320" height="44"/>
@@ -316,11 +343,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="hrS-CK-12L">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="hrS-CK-12L">
                                         <rect key="frame" x="0.0" y="137.5" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hrS-CK-12L" id="dJE-iq-xuT">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -395,7 +422,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="Nky-WO-diX"/>
-    </inferredMetricsTieBreakers>
 </document>

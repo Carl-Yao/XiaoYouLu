@@ -16,6 +16,7 @@
 #import "PublishZCViewController.h"
 #import "WebServiceController.h"
 #import "XYLUserInfoBLL.h"
+#import "PersonInfoViewController.h"
 
 @interface SettingViewController ()
 
@@ -64,9 +65,13 @@
     [myView addSubview:headImg];
     
     UILabel* myLabel = [[UILabel alloc] initWithFrame:CGRectMake(headImg.right + 4, 6, self.view.width - 69, 60)];
-    myLabel.text = @"哎呦不错哦";
+    myLabel.text = [XYLUserInfoBLL shareUserInfoBLL].userInfo.username;
     myLabel.backgroundColor = [UIColor clearColor];
     [myView addSubview:myLabel];
+    
+    UIGestureRecognizer* tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(myTap)];
+    [myView addGestureRecognizer:tap];
+    tap.delegate = self;
     
     UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(10, 380, self.view.frame.size.width-20, 40)];
     [button setTitle:@"退出登录" forState:UIControlStateNormal];//设置button的title
@@ -77,7 +82,7 @@
     [button addTarget:self action:@selector(btnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.view addSubview:button];
-    self.tasks = @[@[@"发起众筹",@"我参与的众筹"],@[@"接受新消息"/*,@"检查更新"*/]];
+    self.tasks = @[@[@"发起众筹",@"我参与的众筹"],@[@"发布资源",@"我的资源"]];
     
     [super viewDidLoad];
 	//@ Do any additional setup after loading the view.
@@ -89,8 +94,13 @@
     UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"退出登录" message:@"确定要退出登录吗？" delegate:self cancelButtonTitle:@"退出" otherButtonTitles:@"取消", nil];
     alert.tag = 1001;
     [alert show];
-
-    
+}
+- (void)myTap
+{
+    PersonInfoViewController* vc = [[PersonInfoViewController alloc] init];
+    vc.isOwn = YES;
+    //vc.userId = dataArr[indexPath.row][@"friendsId"];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
@@ -98,10 +108,10 @@
             //退出登录接口
             __weak SettingViewController * weakSelf = self;
             XYLUserInfoBLL* infoBLL = [XYLUserInfoBLL shareUserInfoBLL];
-            NSDictionary* dicArg = @{@"username":infoBLL.userInfo.username,
+            NSDictionary* dicArg = @{@"userId":infoBLL.userInfo.userid,
                                      @"token":infoBLL.token};
             WebServiceController* _webServiceController = [WebServiceController shareController:self.view];
-            [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/absapi/logout" argsDic:dicArg success:^(NSDictionary* dic){
+            [_webServiceController SendHttpRequestWithMethod:@"/absapi/logout" argsDic:dicArg success:^(NSDictionary* dic){
                 [weakSelf dismissModalViewControllerAnimated:YES];
             }];
         }else if(alertView.tag == 1002)
@@ -156,6 +166,7 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     cell.textLabel.text = self.tasks[0][indexPath.row];
     }else{
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.textLabel.text = self.tasks[1][indexPath.row];
     }
     
@@ -165,7 +176,6 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     //该方法响应列表中行的点击事件
     NSString *selected=[self.tasks[indexPath.section] objectAtIndex:indexPath.row];
     if ([selected isEqualToString:@"修改密码"]) {
@@ -185,10 +195,18 @@
         [self presentViewController:personView animated:YES completion:nil];
     }else if ([selected isEqualToString:@"发起众筹"]) {
         PublishZCViewController* vc = [[PublishZCViewController alloc]init];
+        vc.isZC = YES;
         [self presentViewController:vc animated:YES completion:nil];
     }else if ([selected isEqualToString:@"我参与的众筹"]) {
         MyJoinZCViewController* vc = [[MyJoinZCViewController alloc]init];
         [self presentViewController:vc animated:YES completion:nil];
+    }else if ([selected isEqualToString:@"发布资源"]){
+        PublishZCViewController* vc = [[PublishZCViewController alloc]init];
+        vc.isZC = NO;
+        [self presentViewController:vc animated:YES completion:nil];
+    }else if ([selected isEqualToString:@"我的资源"]){
+        ((UITabBarController*)self.parentViewController).selectedIndex = 1;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"WODEZIYUAN" object: nil];
     }
 
     //indexPath.row得到选中的行号，提取出在数组中的内容。

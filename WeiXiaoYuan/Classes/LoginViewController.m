@@ -18,6 +18,10 @@
 #import "ChangePasswordViewController.h"
 #import "XYLUserInfo.h"
 #import "XYLUserInfoBLL.h"
+#import "InTimeViewController.h"
+#import "WenZhangViewController.h"
+#import "FunctionViewController.h"
+#import "SettingViewController.h"
 
 #define SERVICE_NAME @"XiaoYouLu"
 #define USERNAMEKEY @"UserNameKey"
@@ -67,7 +71,7 @@
 
 - (IBAction)regist: (id)sender
 {
-    [self performSegueWithIdentifier:@"MainToChangePassword" sender:self];
+    [self performSegueWithIdentifier:@"MainToRegister" sender:self];
 }
 
 - (IBAction)loginButtonPressed:(id)sender {
@@ -75,7 +79,7 @@
     [self.nameField resignFirstResponder];
     NSDictionary* dicArg = @{@"username":[self.nameField.text lowercaseString],
                           @"password":[self.numberField.text lowercaseString]};
-    [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/absapi/login" argsDic:dicArg success:^(NSDictionary* dic){
+    [_webServiceController SendHttpRequestWithMethod:@"/absapi/login" argsDic:dicArg success:^(NSDictionary* dic){
         [self HttpSuccessDictionaryCallBack:dic];
     }];
 }
@@ -105,10 +109,10 @@
     [SFHFKeychainUtils storeUsername:self.nameField.text andPassword:self.numberField.text forServiceName:SERVICE_NAME updateExisting:1 error:nil];
     
     NSMutableArray *itemsArray = [[NSMutableArray alloc] init];
-    NSArray *controllerArray = [NSArray arrayWithObjects:@"InTimeViewController",@"FunctionViewController",@"SettingViewController" ,nil];//类名数组
-    NSArray *titleArray = [NSArray arrayWithObjects:@"众筹",@"通讯录",@"我的", nil];//item标题数组
-    NSArray *normalImageArray = [NSArray arrayWithObjects:@"icon_square_nor.png",@"icon_meassage_nor.png",@"icon_selfinfo_nor.png", nil];//item 正常状态下的背景图片
-    NSArray *selectedImageArray = [NSArray arrayWithObjects:@"icon_square_sel.png",@"icon_meassage_sel.png",@"icon_selfinfo_sel.png",nil];//item被选中时的图片名称
+    NSArray *controllerArray = [NSArray arrayWithObjects:@"InTimeViewController",@"WenZhangViewController",@"FunctionViewController",@"SettingViewController" ,nil];//类名数组
+    NSArray *titleArray = [NSArray arrayWithObjects:@"众筹",@"文章",@"通讯录",@"我的", nil];//item标题数组
+    NSArray *normalImageArray = [NSArray arrayWithObjects:@"icon_square_nor.png",@"icon_meassage_nor.png",@"icon_selfinfo_nor1.png",@"icon_selfinfo_nor.png", nil];//item 正常状态下的背景图片
+    NSArray *selectedImageArray = [NSArray arrayWithObjects:@"icon_square_sel.png",@"icon_meassage_sel.png",@"icon_selfinfo_sel1.png",@"icon_selfinfo_sel.png",nil];//item被选中时的图片名称
     
     for (int i = 0; i< controllerArray.count; i++) {
         MALTabBarItemModel *itemModel = [[MALTabBarItemModel alloc] init];
@@ -120,6 +124,24 @@
     }
     
     tabberViewController = [[MALTabBarViewController alloc] initWithItemModels:itemsArray defaultSelectedIndex:0];
-    [self presentViewController:tabberViewController animated:YES completion:nil];
+    //[self presentViewController:tabberViewController animated:YES completion:nil];
+    
+    UITabBarController *tabController = [[UITabBarController alloc] init];
+    
+    InTimeViewController *vc1 = [[InTimeViewController alloc] init];
+    vc1.tabBarItem.image = [UIImage imageNamed:@"icon_square_nor.png"];
+    vc1.tabBarItem.title = @"众筹";
+    WenZhangViewController *vc2 = [[WenZhangViewController alloc] init];
+    vc2.tabBarItem.image = [UIImage imageNamed:@"icon_meassage_nor.png"];
+    vc2.tabBarItem.title = @"文章";
+    FunctionViewController *vc3 = [[FunctionViewController alloc] init];
+    vc3.tabBarItem.image = [UIImage imageNamed:@"icon_selfinfo_nor1.png"];
+    vc3.tabBarItem.title = @"通讯录";
+    SettingViewController *vc4 = [[SettingViewController alloc] init];
+    vc4.tabBarItem.image = [UIImage imageNamed:@"icon_selfinfo_sel.png"];
+    vc4.tabBarItem.title = @"我的";
+    [tabController setViewControllers:@[vc1,vc2,vc3,vc4]];
+    
+    [self presentViewController:tabController animated:YES completion:nil];    
 }
 @end

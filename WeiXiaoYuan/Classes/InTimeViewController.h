@@ -12,8 +12,9 @@
 #import "AppDelegate.h" 
 #import "MALTabBarChinldVIewControllerDelegate.h"
 #import "WebServiceController.h"
+#import "DKScrollingTabController.h"
 
-@interface InTimeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface InTimeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,DKScrollingTabControllerDelegate>
 {
     WebServiceController *_webServiceController;
 }
@@ -21,7 +22,6 @@
 @property(nonatomic,retain)AppDelegate* myAppDelegate;
 @property (strong,nonatomic) DetailForMessageViewController* detailViewController;
 @property (nonatomic, assign) id<MALTabBarChinldVIewControllerDelegate>delegate;
-@property (strong, nonatomic) WebServiceController* webServiceController;
 
 //-(NSString*)recordlist;
 @end

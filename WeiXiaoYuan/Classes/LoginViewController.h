@@ -10,7 +10,7 @@
 #import "WebServiceController.h"
 #import "KeychainItemWrapper.h"
 #import "MALTabBarViewController.h"
-@interface LoginViewController : UIViewController<HttpCallbackDelegate>
+@interface LoginViewController : UIViewController
 {
     WebServiceController *_webServiceController;
     NSUserDefaults *userDefaultes;

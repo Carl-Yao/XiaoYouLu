@@ -153,9 +153,9 @@
 //	}else{
 //       	_iconView.center = CGPointMake(CGRectGetWidth(_centerView.bounds)/2, CGRectGetHeight(_centerView.bounds)/2);
 //    }
-    
-    [_iconView setFrame:CGRectMake(_centerView.bounds.size.width/2, 10, _iconView.bounds.size.width, _iconView.bounds.size.height)];
-    [_label setFrame:CGRectMake(_centerView.frame.size.width/2, iconHeight==0?5:iconHeight, labelSize.width, labelSize.height)];
+    //yzx at 2015/10/31
+    [_iconView setFrame:CGRectMake(_centerView.bounds.size.width/2-_iconView.bounds.size.width/2, 10, _iconView.bounds.size.width, _iconView.bounds.size.height)];
+    [_label setFrame:CGRectMake(_centerView.frame.size.width/2-labelSize.width/2, iconHeight==0?5:iconHeight, labelSize.width, labelSize.height)];
     
 }
 //

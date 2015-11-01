@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface PublishZCViewController : UIViewController
-
+@property (nonatomic,assign) BOOL isZC;
 @end

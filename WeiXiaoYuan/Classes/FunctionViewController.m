@@ -14,11 +14,14 @@
 #import "NewFriendListViewController.h"
 #import "MBProgressHUD.h"
 #import "XYLUserInfoBLL.h"
+#import "SearchFriendViewController.h"
+#import "PersonInfoViewController.h"
 
 @interface FunctionViewController()
 {
     UITableView * table;
     NSMutableArray * friends;
+    NSMutableArray* dataArr;
 }
 @end
 @implementation FunctionViewController
@@ -64,11 +67,12 @@
     [self.view insertSubview:joinButton atIndex:1];
     [joinButton addTarget:self action:@selector(btnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
     
-    UIButton *search = [[UIButton alloc] initWithFrame:CGRectMake(1, view.bottom+2, self.view.frame.size.width-2, 24)];
+    UIButton *search = [[UIButton alloc] initWithFrame:CGRectMake(1, view.bottom+6, self.view.frame.size.width-2, 24)];
     search.layer.borderWidth = 0.5;
     search.layer.cornerRadius = 12;
     search.layer.masksToBounds = YES;
     [self.view addSubview:search];
+    [search addTarget:self action:@selector(searchBtn) forControlEvents:UIControlEventTouchUpInside];
     UIImageView* searchImg = [[UIImageView alloc] initWithFrame:CGRectMake(10, 6, 12, 12)];
     [searchImg setImage:[UIImage imageNamed:@"ktv_ksong_searchbtn"]];
     [search addSubview:searchImg];
@@ -86,7 +90,10 @@
     table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     table.backgroundColor = [UIColor clearColor];
     [self.view addSubview:table];
-    
+    friends = [[NSMutableArray alloc]init];
+    [friends addObject:@"新的朋友"];
+    //[friends addObject:@"群聊"];
+    [table reloadData];
     _webServiceController = [WebServiceController shareController:self.view];
 }
 
@@ -96,14 +103,14 @@
     //加未读标示
     //dispatch_async(dispatch_get_main_queue(), ^{
         
-        [_webServiceController SendHttpRequestWithMethod:@"/addressBooks/manager/absfriends/absapi/list" argsDic:@{@"userid":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-            NSArray* dataArr = dic[@"data"];
+        [_webServiceController SendHttpRequestWithMethod:@"/absapi/absfriends/list" argsDic:@{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"searchArea":@"0", @"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+            dataArr = dic[@"data"];
             if (dataArr) {
                 friends = [[NSMutableArray alloc]init];
                 [friends addObject:@"新的朋友"];
-                [friends addObject:@"群聊"];
+                //[friends addObject:@"群聊"];
                 for (NSDictionary* itemDic in dataArr) {
-                    NSString *info = itemDic[@"trandate"];
+                    NSString *info = itemDic[@"friendsName"]?:@"NULL";
                     [friends addObject:info];
                 }
                 [table reloadData];
@@ -131,6 +138,7 @@
         cell.contentView.backgroundColor = [UIColor clearColor];
     }
     cell.textLabel.text = [friends objectAtIndex: indexPath.row];
+    //cell.rightContent = [friends objectAtIndex: indexPath.row];
     return cell;
 }
 
@@ -139,12 +147,23 @@
     if (indexPath.row == 0){
         NewFriendListViewController* vc = [[NewFriendListViewController alloc] init];
         [self presentViewController:vc animated:YES completion:nil];
+    }else{
+        PersonInfoViewController* vc = [[PersonInfoViewController alloc] init];
+        vc.isOwn = NO;
+        vc.userId = dataArr[indexPath.row-1][@"friendsId"];
+        [self presentViewController:vc animated:YES completion:nil];
     }
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+}
+
+-(void)searchBtn
+{
+    SearchFriendViewController* vc = [[SearchFriendViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -157,4 +176,5 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}@end
+}
+@end
