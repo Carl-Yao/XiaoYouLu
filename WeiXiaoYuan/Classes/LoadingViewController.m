@@ -33,7 +33,7 @@
     UIImage *image = [UIImage imageNamed:@"welcome4.jpg"];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height)];
     imageView.image = image;
-    [self.view insertSubview:imageView atIndex:0];
+    //[self.view insertSubview:imageView atIndex:0];
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [self do];
 //    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
@@ -49,7 +49,7 @@
 
 - (void)checkLogin:(id)sender
 {
-    [NSThread sleepForTimeInterval:1];
+    //[NSThread sleepForTimeInterval:1];
     //[NSThread sleepForTimeInterval:0.5];
     [self performSegueWithIdentifier:@"Login" sender:self];
 }

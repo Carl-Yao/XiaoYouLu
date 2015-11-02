@@ -11,5 +11,7 @@
 @interface XYLCommonTableViewCell : UITableViewCell
 
 @property (nonatomic, strong)UILabel *rightContent;
+@property (nonatomic, strong)UIButton *rightBtn;
+@property (nonatomic, strong)NSString *friendId;
 
 @end

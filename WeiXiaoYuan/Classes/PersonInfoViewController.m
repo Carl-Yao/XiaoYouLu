@@ -17,12 +17,18 @@
 #import "KGProgressView.h"
 #import "EditProperyViewController.h"
 #import "XYLCommonTableViewCell.h"
+#import "ZHPickView.h"
 
-@interface PersonInfoViewController ()
+@interface PersonInfoViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,ZHPickViewDelegate>
 {
     UITableView *table;
     NSDictionary* dataDic;
-    NSMutableArray* propretys;
+    NSMutableArray* userPropretys;
+    NSMutableArray* schoolPropretys;
+    NSMutableArray* workPropretys;
+    NSArray* pickList;
+    NSIndexPath* myIndexPath;
+    ZHPickView* pickview;
 }
 @end
 
@@ -68,94 +74,193 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0]];
     
     //列表
-    table = [[UITableView alloc] initWithFrame:CGRectMake(0, view.bottom+10, self.view.frame.size.width, self.view.frame.size.height - view.bottom) style:UITableViewStylePlain];
+    table = [[UITableView alloc] initWithFrame:CGRectMake(0, view.bottom, self.view.frame.size.width, self.view.frame.size.height - view.bottom) style:UITableViewStylePlain];
     table.delegate = self;
     table.dataSource = self;
     table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     table.backgroundColor = [UIColor clearColor];
     [self.view addSubview:table];
     
-    //    newFriends = [[NSMutableArray alloc]init];
-    //    for (int i = 1; i < 8; i++) {
-    //        NSString* info = [[NSString alloc] init];
-    //        info = [NSString stringWithFormat:@"新的朋友%d",i];
-    //        [newFriends addObject:info];
-    //    }
-    
     _webServiceController = [WebServiceController shareController:self.view];
     // Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    [_webServiceController SendHttpRequestWithMethod:@"/absapi/absuserinfo/viewUserInfo" argsDic:@{@"id":(self.isOwn?[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid:self.userId), @"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-        dataDic = dic[@"data"][@"absUserinfo"];
+//    [_webServiceController SendHttpRequestWithMethod:url argsDic:dicArg success:^(NSDictionary* dic){
+//        [_webServiceController SendHttpRequestWithMethod:url argsDic:dicArg success:^(NSDictionary* dic){
+//        }];
+//    }];
+    
+    NSString* url;
+    NSDictionary* dicArg;
+    if (self.isOwn) {
+        url = @"/absapi/absuserinfo/viewUserInfo";
+        dicArg = @{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+    }else{
+        url = @"/absapi/absuserinfo/viewFriendInfo";
+        dicArg = @{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid, @"friendId":self.userId,@"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+    }
+    [_webServiceController SendHttpRequestWithMethod:url argsDic:dicArg success:^(NSDictionary* dic){
+        dataDic = dic[@"data"];
         if (dataDic) {
-            propretys = [[NSMutableArray alloc]init];
-            NSMutableDictionary* item = [[NSMutableDictionary alloc]init];
-            [item setObject:@"姓名" forKey:@"title"];
-            [item setObject:dataDic[@"username"]?:@"null" forKey:@"content"];
-            [item setObject:@"username" forKey:@"propery"];
-            [propretys addObject:item];
+            if (dataDic[@"absUserinfo"]) {
+                NSDictionary* dic = dataDic[@"absUserinfo"];
+                userPropretys = [[NSMutableArray alloc]init];
+                NSMutableDictionary* item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"用户名" forKey:@"title"];
+                [item setObject:dic[@"username"]?:@"" forKey:@"content"];
+                [item setObject:@"username" forKey:@"propery"];
+                [userPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"姓名" forKey:@"title"];
+                [item setObject:dic[@"name"]?:@"" forKey:@"content"];
+                [item setObject:@"name" forKey:@"propery"];
+                [userPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"性别" forKey:@"title"];
+                [item setObject:dic[@"sex"]?:@"" forKey:@"content"];
+                [item setObject:@"sex" forKey:@"propery"];
+                [userPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"手机号" forKey:@"title"];
+                [item setObject:dic[@"dn"]?:@"" forKey:@"content"];
+                [item setObject:@"dn" forKey:@"propery"];
+                [userPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"邮箱" forKey:@"title"];
+                [item setObject:dic[@"mail"]?:@"" forKey:@"content"];
+                [item setObject:@"mail" forKey:@"propery"];
+                [userPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"QQ" forKey:@"title"];
+                [item setObject:dic[@"qq"]?:@"" forKey:@"content"];
+                [item setObject:@"qq" forKey:@"propery"];
+                [userPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"微信" forKey:@"title"];
+                [item setObject:dic[@"wechat"]?:@"" forKey:@"content"];
+                [item setObject:@"wechat" forKey:@"propery"];
+                [userPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"省份" forKey:@"title"];
+                [item setObject:dic[@"provName"]?:@"" forKey:@"content"];
+                [item setObject:@"provName" forKey:@"propery"];
+                [userPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"城市" forKey:@"title"];
+                [item setObject:dic[@"cityName"]?:@"" forKey:@"content"];
+                [item setObject:@"cityName" forKey:@"propery"];
+                [userPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"区" forKey:@"title"];
+                [item setObject:dic[@"areaName"]?:@"" forKey:@"content"];
+                [item setObject:@"areaName" forKey:@"propery"];
+                [userPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"是否公开" forKey:@"title"];
+                [item setObject:dic[@"isvalid"]?:@"" forKey:@"content"];
+                [item setObject:@"isvalid" forKey:@"propery"];
+                [userPropretys addObject:item];
+            }
+            if (dataDic[@"absUserSchool"]) {
+                NSDictionary* dic = dataDic[@"absUserSchool"];
+                schoolPropretys = [[NSMutableArray alloc]init];
+                NSMutableDictionary* item = [[NSMutableDictionary alloc]init];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"学校" forKey:@"title"];
+                [item setObject:dic[@"schoolDesc"]?:@"" forKey:@"content"];
+                [item setObject:@"schoolDesc" forKey:@"propery"];
+                [schoolPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"入学年份" forKey:@"title"];
+                [item setObject:(NSString*)(dic[@"inSchoolYear"]?:@"") forKey:@"content"];
+                [item setObject:@"inSchoolDate" forKey:@"propery"];
+                [schoolPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"学院" forKey:@"title"];
+                [item setObject:dic[@"academyDesc"]?:@"" forKey:@"content"];
+                [item setObject:@"academyDesc" forKey:@"propery"];
+                [schoolPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"专业" forKey:@"title"];
+                [item setObject:dic[@"prof"]?:@"" forKey:@"content"];
+                [item setObject:@"prof" forKey:@"propery"];
+                [schoolPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"班级" forKey:@"title"];
+                [item setObject:dic[@"classNme"]?:@"" forKey:@"content"];
+                [item setObject:@"classNme" forKey:@"propery"];
+                [schoolPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"是否公开" forKey:@"title"];
+                [item setObject:dic[@"isvalid"]?:@"" forKey:@"content"];
+                [item setObject:@"isvalid" forKey:@"propery"];
+                [schoolPropretys addObject:item];
+            }
             
-            item = [[NSMutableDictionary alloc]init];
-            [item setObject:@"性别" forKey:@"title"];
-            [item setObject:dataDic[@"sex"]?:@"null" forKey:@"content"];
-            [item setObject:@"sex" forKey:@"propery"];
-            [propretys addObject:item];
-            
-            item = [[NSMutableDictionary alloc]init];
-            [item setObject:@"城市" forKey:@"title"];
-            [item setObject:dataDic[@"addr"]?:@"null" forKey:@"content"];
-            [item setObject:@"addr" forKey:@"propery"];
-            [propretys addObject:item];
-        
-            item = [[NSMutableDictionary alloc]init];
-            [item setObject:@"生日" forKey:@"title"];
-            [item setObject:dataDic[@"birthday"]?:@"null" forKey:@"content"];
-            [item setObject:@"birthday" forKey:@"propery"];
-            [propretys addObject:item];
-            
-            item = [[NSMutableDictionary alloc]init];
-            [item setObject:@"地址" forKey:@"title"];
-            [item setObject:dataDic[@"dtAddr"]?:@"null" forKey:@"content"];
-            [item setObject:@"dtAddr" forKey:@"propery"];
-            [propretys addObject:item];
-            
-            item = [[NSMutableDictionary alloc]init];
-            [item setObject:@"电话号码" forKey:@"title"];
-            [item setObject:dataDic[@"dn"]?:@"null" forKey:@"content"];
-            [item setObject:@"dn" forKey:@"propery"];
-            [propretys addObject:item];
-            
-            item = [[NSMutableDictionary alloc]init];
-            [item setObject:@"等级" forKey:@"title"];
-            [item setObject:dataDic[@"level"]?:@"null" forKey:@"content"];
-            [item setObject:@"level" forKey:@"propery"];
-            [propretys addObject:item];
-            
-            item = [[NSMutableDictionary alloc]init];
-            [item setObject:@"邮箱" forKey:@"title"];
-            [item setObject:dataDic[@"mail"]?:@"null" forKey:@"content"];
-            [item setObject:@"mail" forKey:@"propery"];
-            [propretys addObject:item];
-            
-            item = [[NSMutableDictionary alloc]init];
-            [item setObject:@"qq" forKey:@"title"];
-            [item setObject:dataDic[@"qq"]?:@"null" forKey:@"content"];
-            [item setObject:@"qq" forKey:@"propery"];
-            [propretys addObject:item];
-            
-            item = [[NSMutableDictionary alloc]init];
-            [item setObject:@"微信" forKey:@"title"];
-            [item setObject:dataDic[@"wechat"]?:@"null" forKey:@"content"];
-            [item setObject:@"wechat" forKey:@"propery"];
-            [propretys addObject:item];
-            
-            item = [[NSMutableDictionary alloc]init];
-            [item setObject:@"密码" forKey:@"title"];
-            [item setObject:@"***" forKey:@"content"];
-            [item setObject:@"password" forKey:@"propery"];
-            [propretys addObject:item];
+            if (dataDic[@"absUserWork"]) {
+                NSDictionary* dic = dataDic[@"absUserWork"];
+                workPropretys = [[NSMutableArray alloc]init];
+                NSMutableDictionary* item = [[NSMutableDictionary alloc]init];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"所在行业" forKey:@"title"];
+                [item setObject:dic[@"trade"]?:@"" forKey:@"content"];
+                [item setObject:@"trade" forKey:@"propery"];
+                [workPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"公司名称" forKey:@"title"];
+                [item setObject:dic[@"companyName"]?:@"" forKey:@"content"];
+                [item setObject:@"companyName" forKey:@"propery"];
+                [workPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"公司职位" forKey:@"title"];
+                [item setObject:dic[@"position"]?:@"" forKey:@"content"];
+                [item setObject:@"position" forKey:@"propery"];
+                [workPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"省份" forKey:@"title"];
+                [item setObject:dic[@"provName"]?:@"" forKey:@"content"];
+                [item setObject:@"provName" forKey:@"propery"];
+                [workPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"城市" forKey:@"title"];
+                [item setObject:dic[@"cityName"]?:@"" forKey:@"content"];
+                [item setObject:@"cityName" forKey:@"propery"];
+                [workPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"区" forKey:@"title"];
+                [item setObject:dic[@"areaName"]?:@"" forKey:@"content"];
+                [item setObject:@"areaName" forKey:@"propery"];
+                [workPropretys addObject:item];
+                
+                item = [[NSMutableDictionary alloc]init];
+                [item setObject:@"是否公开" forKey:@"title"];
+                [item setObject:dic[@"isvalid"]?:@"" forKey:@"content"];
+                [item setObject:@"isvalid" forKey:@"propery"];
+                [workPropretys addObject:item];
+            }
             
             [table reloadData];
         }
@@ -168,9 +273,68 @@
 }
 
 #pragma mark - Table View
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [[dataDic allKeys] count];
+}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    
+    switch (section) {
+        case 0:
+            if (!self.isOwn && ![dataDic[@"absUserinfo"][@"isvalid"] isEqualToString:@"1"]) {
+                return @"";
+            }else{
+                return @"基本信息";
+            }
+            break;
+        case 1:
+            if (!self.isOwn && ![dataDic[@"absUserSchool"][@"isvalid"] isEqualToString:@"1"]) {
+                return @"";
+            }else{
+                return @"学校信息";
+            }
+            break;
+        case 2:
+            if (!self.isOwn && ![dataDic[@"absUserWork"][@"isvalid"] isEqualToString:@"1"]) {
+                return @"";
+            }else{
+                return @"工作信息";
+            }
+            break;
+        default:
+            break;
+    }
+    return @"";
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 11;//[[dataDic allKeys] count];
+    switch (section) {
+        case 0:
+            if (!self.isOwn && ![dataDic[@"absUserinfo"][@"isvalid"] isEqualToString:@"1"]) {
+                return 0;
+            }else{
+                return [userPropretys count];
+            }
+            break;
+        case 1:
+            if (!self.isOwn && ![dataDic[@"absUserSchool"][@"isvalid"] isEqualToString:@"1"]) {
+                return 0;
+            }else{
+                return [schoolPropretys count];
+            }
+            break;
+        case 2:
+            if (!self.isOwn && ![dataDic[@"absUserWork"][@"isvalid"] isEqualToString:@"1"]) {
+                return 0;
+            }else{
+                return [workPropretys count];
+            }
+            break;
+        default:
+            break;
+    }
+    return 0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -181,10 +345,29 @@
     {
         cell = [[XYLCommonTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.backgroundColor = [UIColor clearColor];
-        cell.contentView.backgroundColor = [UIColor clearColor];
+        if (self.isOwn) {
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        cell.contentView.backgroundColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor whiteColor];
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"%@",[propretys objectAtIndex:indexPath.row][@"title"],nil];
-    cell.rightContent.text = [propretys objectAtIndex:indexPath.row][@"content"];
+    switch (indexPath.section) {
+        case 0:
+            cell.textLabel.text = [NSString stringWithFormat:@"%@",[userPropretys objectAtIndex:indexPath.row][@"title"],nil];
+            cell.rightContent.text = [userPropretys objectAtIndex:indexPath.row][@"content"];
+            break;
+        case 1:
+            cell.textLabel.text = [NSString stringWithFormat:@"%@",[schoolPropretys objectAtIndex:indexPath.row][@"title"],nil];
+            cell.rightContent.text = [schoolPropretys objectAtIndex:indexPath.row][@"content"];
+            break;
+        case 2:
+            cell.textLabel.text = [NSString stringWithFormat:@"%@",[workPropretys objectAtIndex:indexPath.row][@"title"],nil];
+            cell.rightContent.text = [workPropretys objectAtIndex:indexPath.row][@"content"];
+            break;
+        default:
+            break;
+    }
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -192,9 +375,149 @@
     if (!self.isOwn) {
         return;
     }
+    
+    NSString *proName;
+    NSString *titleName;
+    switch (indexPath.section) {
+        case 0:
+            proName = userPropretys[indexPath.row][@"propery"];
+            titleName = userPropretys[indexPath.row][@"title"];
+            break;
+        case 1:
+            proName = schoolPropretys[indexPath.row][@"propery"];
+            titleName = schoolPropretys[indexPath.row][@"title"];
+            break;
+        case 2:
+            proName = workPropretys[indexPath.row][@"propery"];
+            titleName = workPropretys[indexPath.row][@"title"];
+            break;
+        default:
+            break;
+    }
+    
+    if ([proName isEqualToString:@"sex"] || [proName isEqualToString:@"isvalid"]
+        || [proName isEqualToString:@"provName"]
+        || [proName isEqualToString:@"cityName"]
+        || [proName isEqualToString:@"areaName"]
+        || [proName isEqualToString:@"className"]
+        || [proName isEqualToString:@"academyDesc"]
+        || [proName isEqualToString:@"schoolDesc"]) {
+        if ([proName isEqualToString:@"sex"]) {
+            pickList = [[NSArray alloc]initWithObjects:@"男",@"女",nil];
+            pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
+            
+            pickview.delegate=self;
+            myIndexPath = indexPath;
+            [pickview show];
+        }else if([proName isEqualToString:@"isvalid"]){
+            pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
+            pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
+            
+            pickview.delegate=self;
+            myIndexPath = indexPath;
+            [pickview show];
+        }else if([proName isEqualToString:@"provName"]){
+            NSString *str = @"/absapi/absarea/queryByParentId";
+            [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":@"1",@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+                pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
+                
+                pickview = [[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
+                
+                pickview.delegate=self;
+                myIndexPath = indexPath;
+                [pickview show];
+            }];
+            
+        }else if([proName isEqualToString:@"cityName"]){
+            NSString* provCode;
+            if (indexPath.section == 0) {
+                provCode = dataDic[@"absUserinfo"][@"provCode"];
+            }else if (indexPath.section == 2){
+                provCode = dataDic[@"absUserWork"][@"provCode"];
+            }
+            if (provCode) {
+                NSString *str = @"/absapi/absarea/queryByParentId";
+                [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":provCode,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+                    pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
+                    //[MBProgressHUD hideHUDForView:self.view animated:YES];
+                    pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
+                    
+                    pickview.delegate=self;
+                    myIndexPath = indexPath;
+                    [pickview show];
+                }];
+            }
+        }else if([proName isEqualToString:@"areaName"]){
+            NSString* cityCode;
+            if (indexPath.section == 0) {
+                cityCode = dataDic[@"absUserinfo"][@"cityCode"];
+            }else if (indexPath.section == 2){
+                cityCode = dataDic[@"absUserWork"][@"cityCode"];
+            }
+            if (cityCode) {
+                NSString *str = @"/absapi/absarea/queryByParentId";
+                [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":cityCode,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+                    pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
+                    //[MBProgressHUD hideHUDForView:self.view animated:YES];
+                    pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
+                    
+                    pickview.delegate=self;
+                    myIndexPath = indexPath;
+                    [pickview show];
+                }];
+            }
+        }
+        
+        else if([proName isEqualToString:@"schoolDesc"]){
+            NSString *str = @"/absapi/abscollege/queryByParentId";
+            [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":@"0",@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+                pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
+                
+                pickview = [[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
+                
+                pickview.delegate=self;
+                myIndexPath = indexPath;
+                [pickview show];
+            }];
+            
+        }else if([proName isEqualToString:@"academyDesc"]){
+            NSString* provCode = dataDic[@"absUserSchool"][@"academy"];
+            
+            if (provCode) {
+                NSString *str = @"/absapi/abscollege/queryByParentId";
+                [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":provCode,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+                    pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
+                    //[MBProgressHUD hideHUDForView:self.view animated:YES];
+                    pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
+                    
+                    pickview.delegate=self;
+                    myIndexPath = indexPath;
+                    [pickview show];
+                }];
+            }
+        }else if([proName isEqualToString:@"classId"]){
+            NSString* citiCode = dataDic[@"absUserSchool"][@"classId"];
+            
+            if (citiCode) {
+                NSString *str = @"/absapi/abscollege/queryByParentId";
+                [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":citiCode,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+                    pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
+                    //[MBProgressHUD hideHUDForView:self.view animated:YES];
+                    pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
+                    
+                    pickview.delegate=self;
+                    myIndexPath = indexPath;
+                    [pickview show];
+                }];
+            }
+        }
+        
+        return;
+    }
     EditProperyViewController* vc = [[EditProperyViewController alloc] init];
-    vc.titleStr = propretys[indexPath.row][@"title"];
-    vc.propery = propretys[indexPath.row][@"propery"];
+    vc.titleStr = userPropretys[indexPath.row][@"title"];
+    vc.type = indexPath.section;
+    vc.propery = userPropretys[indexPath.row][@"propery"];
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -207,14 +530,28 @@
 {
     return 40;
 }
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(void)toobarDonBtnHaveClick:(ZHPickView *)pickView resultString:(NSString *)resultString
+{
+    NSDictionary* dic;
+    if ([userPropretys[myIndexPath.row][@"propery"] isEqualToString: @"sex"]) {
+        dic = @{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, @"sex":resultString, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+    }else if([userPropretys[myIndexPath.row][@"propery"] isEqualToString: @"isvalid"]) {
+        dic = @{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, @"isvalid":resultString, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+    }
+    
+    NSString* str;
+    if (myIndexPath.row == 0) {
+        str = @"/absapi/absuserinfo/update";
+    }else if (myIndexPath.row == 1){
+        str = @"/absapi/absuserschool/save";
+    }else{
+        str = @"/absapi/absuserwork/updateByUserId";
+    }
+    
+    [_webServiceController SendHttpRequestWithMethod:str argsDic:dic success:^(NSDictionary* dic){
+        [self dismissViewControllerAnimated:YES completion:nil];
+        [[KGProgressView windowProgressView] showErrorWithStatus:@"保存成功" duration:0.5];
+    }];
 }
-*/
-
 @end

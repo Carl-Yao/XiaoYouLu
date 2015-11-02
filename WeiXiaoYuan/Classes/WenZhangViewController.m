@@ -16,6 +16,7 @@
 #import "DetailForMessageViewController.h"
 #import "XYLCommonTableViewCell.h"
 #import "KTVDateFormatter.h"
+#import "WebViewController.h"
 
 @interface WenZhangViewController ()<DKScrollingTabControllerDelegate>{
     UITableView *table;
@@ -43,6 +44,7 @@
 - (void)myZY{
     [leftTabController selectButtonWithIndex:1];
     [_webServiceController SendHttpRequestWithMethod:@"/absapi/abssource/search" argsDic:@{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+        [dataArr  removeAllObjects];
         dataArr = dic[@"data"];
         if (dataArr) {
             [table reloadData];
@@ -73,7 +75,7 @@
     [self addChildViewController:leftTabController];
     [leftTabController didMoveToParentViewController:self];
     [self.view addSubview:leftTabController.view];
-    leftTabController.view.frame = CGRectMake(0, view.bottom+2, self.view.frame.size.width, 30);
+    leftTabController.view.frame = CGRectMake(44, view.bottom+2, self.view.frame.size.width-44, 30);
     leftTabController.view.backgroundColor = [UIColor clearColor];
     leftTabController.buttonPadding = 0;
     leftTabController.underlineIndicator = YES;
@@ -85,7 +87,7 @@
     leftTabController.unselectedBackgroundColor = [UIColor clearColor];
     leftTabController.buttonInset = 12;
     leftTabController.selectionFont = [UIFont systemFontOfSize:14];
-    leftTabController.selection = [[NSArray alloc]initWithObjects:@"PLACEPPPPLACEPPPPP",@"PLACEPPPPLACEPPPPP",nil];
+    leftTabController.selection = [[NSArray alloc]initWithObjects:@"PLACEPPPPLACE",@"PLACEPPPPLACE",nil];
     int i = 0;
     NSArray* titles = @[@"文章",@"资源"];
     for (id object in titles) {
@@ -97,22 +99,33 @@
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
     }];
     
-    //列表
-    table = [[UITableView alloc] initWithFrame:CGRectMake(0, leftTabController.view.bottom+4, self.view.frame.size.width, self.view.frame.size.height - leftTabController.view.bottom -50) style:UITableViewStylePlain];
-    table.delegate = self;
-    table.dataSource = self;
-    table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    table.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:table];
-    selectIndex = 0;
-    _webServiceController = [WebServiceController shareController:self.view];
-    [_webServiceController SendHttpRequestWithMethod:@"/absapi/absarticle/search" argsDic:@{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-        dataArr = dic[@"data"];
-        if (dataArr) {
-            [table reloadData];
-        }
-        //[MBProgressHUD hideHUDForView:self.view animated:YES];
-    }];
+    if ([[XYLUserInfoBLL shareUserInfoBLL].userInfo.isvalid isEqualToString:@"1"]){
+        //列表
+//        table = [[UITableView alloc] initWithFrame:CGRectMake(0, leftTabController.view.bottom+4, self.view.frame.size.width, self.view.frame.size.height - leftTabController.view.bottom -50) style:UITableViewStylePlain];
+//        table.delegate = self;
+//        table.dataSource = self;
+//        table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+//        table.backgroundColor = [UIColor clearColor];
+//        [self.view addSubview:table];
+//        selectIndex = 0;
+//        _webServiceController = [WebServiceController shareController:self.view];
+//        NSString* str = @"/absapi/absarticle/search";
+//        [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+//            dataArr = dic[@"data"];
+//            if (dataArr) {
+//                [table reloadData];
+//            }
+//            //[MBProgressHUD hideHUDForView:self.view animated:YES];
+//        }];
+    }else{
+        UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(20, leftTabController.view.bottom+100, self.view.width - 40, 50)];
+        label.text = @"你的个人信息未通过审核，请真实填写完整的个人信息资料。";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.lineBreakMode = NSLineBreakByCharWrapping;
+        label.numberOfLines = 3;
+        label.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:label];
+    }
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
@@ -129,6 +142,26 @@
     //dispatch_async(dispatch_get_main_queue(), ^{
     
     //});
+    if ([[XYLUserInfoBLL shareUserInfoBLL].userInfo.isvalid isEqualToString:@"1"]){
+        //列表
+        table = [[UITableView alloc] initWithFrame:CGRectMake(0, leftTabController.view.bottom+4, self.view.frame.size.width, self.view.frame.size.height - leftTabController.view.bottom -50) style:UITableViewStylePlain];
+        table.delegate = self;
+        table.dataSource = self;
+        table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        table.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:table];
+        selectIndex = 0;
+        _webServiceController = [WebServiceController shareController:self.view];
+        NSString* str = @"/absapi/absarticle/search";
+        [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+                [dataArr  removeAllObjects];
+                dataArr = dic[@"data"];
+                if (dataArr) {
+                    [table reloadData];
+                }
+            //[MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
+    }
 }
 
 #pragma mark - TabControllerDelegate
@@ -140,6 +173,7 @@
     if (selection == 1) {
         str = @"/absapi/abssource/search";
         [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+            [dataArr  removeAllObjects];
             dataArr = dic[@"data"];
             if (dataArr) {
                 [table reloadData];
@@ -149,6 +183,7 @@
     }else{
         str = @"/absapi/absarticle/search";
         [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+            [dataArr  removeAllObjects];
             dataArr = dic[@"data"];
             if (dataArr) {
                 [table reloadData];
@@ -177,38 +212,42 @@
         cell.contentView.backgroundColor = [UIColor clearColor];
     }
     cell.textLabel.text = [dataArr objectAtIndex: indexPath.row][@"title"];
-    NSString* aaa = [dataArr objectAtIndex: indexPath.row][@"createTime"];
-    NSString * date = [KTVDateFormatter formatSecondToDataString:[aaa longLongValue]];
-    //cell.rightContent.text = date;
+    NSString* aaa = [dataArr objectAtIndex: indexPath.row][@"dateTime"]?:@"";
+    //NSString * date = [KTVDateFormatter formatSecondToDataString:[aaa longLongValue]];
+    cell.rightContent.text = aaa;
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ([[XYLUserInfoBLL shareUserInfoBLL].userInfo.isvalid isEqualToString:@"1"]){
     NSString* str;
     if (selectIndex == 1) {
         str = @"/absapi/abssource/viewSourceDetail";
+        [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"id":dataArr[indexPath.row][@"id"],@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+            NSDictionary* dataDic = dic[@"data"];
+            
+            DetailForMessageViewController* controller = [[DetailForMessageViewController alloc] init];
+            RecommendInfo* info = [[RecommendInfo alloc] init];
+            info.title = dataDic[@"title"];
+            info.content = dataDic[@"context"];
+            //info.date = @"date";
+            info.relatePersonNum = 0;//dataDic[@""];
+            //info.imgUrl
+            controller.recommendInfo = info;
+            [self presentViewController:controller animated:YES completion:nil];
+            //[MBProgressHUD hideHUDForView:self.view animated:YES];
+        }];
     }else{
         str = @"/absapi/absarticle/viewArticleDetail";
-    }
-    [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"id":dataArr[indexPath.row][@"id"],@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-        NSDictionary* dataDic = dic[@"data"];
-        
-        DetailForMessageViewController* controller = [[DetailForMessageViewController alloc] init];
-        RecommendInfo* info = [[RecommendInfo alloc] init];
-        info.title = dataDic[@"title"];
-        info.content = dataDic[@"context"];
-        //info.date = @"date";
-        info.relatePersonNum = 0;//dataDic[@""];
-        //info.imgUrl
-        controller.recommendInfo = info;
+        WebViewController* controller = [[ WebViewController alloc ]init];
+        controller.titleStr = dataArr[indexPath.row][@"title"];
+        controller.wzId = dataArr[indexPath.row][@"id"]?:@"NULL";
         [self presentViewController:controller animated:YES completion:nil];
-        //[MBProgressHUD hideHUDForView:self.view animated:YES];
-    }];
-
+    }
+    }
 }
-
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     

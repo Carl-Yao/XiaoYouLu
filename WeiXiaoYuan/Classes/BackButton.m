@@ -46,12 +46,12 @@
 
 - (CGRect)titleRectForContentRect:(CGRect)contentRect
 {
-    return CGRectMake(contentRect.origin.x+ contentRect.size.height, contentRect.origin.y , contentRect.size.width - contentRect.size.height, contentRect.size.height);
+    return CGRectMake(contentRect.origin.x+ contentRect.size.height-14, contentRect.origin.y , contentRect.size.width - contentRect.size.height, contentRect.size.height);
 }
 
 - (CGRect)imageRectForContentRect:(CGRect)bounds
 {
-    return CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.height, bounds.size.height);
+    return CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.height-10, bounds.size.height);
 }
 
 

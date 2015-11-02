@@ -292,7 +292,7 @@
     PersonInfoViewController* vc = [[PersonInfoViewController alloc] init];
     vc.isOwn = NO;
     vc.userId = dataArr[indexPath.row][@"friendsId"];
-    [self presentViewController:vc animated:YES completion:nil];
+    //[self presentViewController:vc animated:YES completion:nil];
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

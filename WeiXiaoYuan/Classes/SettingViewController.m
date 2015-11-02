@@ -82,7 +82,7 @@
     [button addTarget:self action:@selector(btnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
 
     [self.view addSubview:button];
-    self.tasks = @[@[@"发起众筹",@"我参与的众筹"],@[@"发布资源",@"我的资源"]];
+    self.tasks = @[@[/*@"发起众筹",@"我参与的众筹"*/],@[@"发布资源",@"我的资源"]];
     
     [super viewDidLoad];
 	//@ Do any additional setup after loading the view.

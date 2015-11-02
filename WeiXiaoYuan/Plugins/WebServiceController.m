@@ -28,7 +28,7 @@ static METHOD_TYPE _methodType;
         if ((obj=[super init]) != nil) {
             //初始化
             self->currentView = view;
-            self->appServiceUrl = @"http://123.57.11.237:8081";
+            self->appServiceUrl = @"http://123.57.11.237";
         }
     });
     self = obj;
@@ -113,7 +113,7 @@ static METHOD_TYPE _methodType;
             retDic = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
         }
         
-        if (retDic) {
+        if (retDic && [retDic isKindOfClass:[NSDictionary class] ]) {
             if ([retDic[@"message"] isEqualToString:@"success"] || [retDic[@"resultcode"] isEqualToString:@"0"]){
                 successDicBlock(retDic);
             }else{

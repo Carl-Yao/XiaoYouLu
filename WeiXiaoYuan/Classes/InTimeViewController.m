@@ -50,45 +50,20 @@
 
     [self.view setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0]];
 
-    UIButton *search = [[UIButton alloc] initWithFrame:CGRectMake(1, view.bottom+2, self.view.frame.size.width-2, 24)];
-    search.layer.borderWidth = 0.5;
-    search.layer.cornerRadius = 12;
-    search.layer.masksToBounds = YES;
-    [self.view addSubview:search];
-    UIImageView* searchImg = [[UIImageView alloc] initWithFrame:CGRectMake(10, 6, 12, 12)];
-    [searchImg setImage:[UIImage imageNamed:@"ktv_ksong_searchbtn"]];
-    [search addSubview:searchImg];
-    UILabel* searchTitle = [[UILabel alloc] initWithFrame:CGRectMake(22+2, 4, search.width - 22-2, 16)];
-    searchTitle.backgroundColor = [UIColor clearColor];
-    searchTitle.font = [UIFont systemFontOfSize: 12];
-    searchTitle.textColor = [UIColor grayColor];
-    searchTitle.text = @"搜索活动";
-    [search addSubview:searchTitle];
-    
-//    UIButton* btn1 = [[UIButton alloc] initWithFrame:CGRectMake(2, search.bottom+2, 48, 30)];
-//    [btn1 setTitle:@"推荐" forState:UIControlStateNormal];
-//    [btn1 setBackgroundColor:[UIColor colorWithHexString:@"#49c9d6"]];
-//    [btn1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    btn1.titleLabel.font = [UIFont systemFontOfSize:12];
-//    [self.view addSubview:btn1];
-//    UIButton* btn2 = [[UIButton alloc] initWithFrame:CGRectMake(btn1.right+2, search.bottom+2, 48, 30)];
-//    [btn2 setTitle:@"公益" forState:UIControlStateNormal];
-//    btn2.titleLabel.textColor = [UIColor blackColor];
-//    [btn2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    btn2.titleLabel.font = [UIFont systemFontOfSize:12];
-//    [self.view addSubview:btn2];
-//    UIButton* btn3 = [[UIButton alloc] initWithFrame:CGRectMake(btn2.right+2, search.bottom+2, 48, 30)];
-//    [btn3 setTitle:@"股权" forState:UIControlStateNormal];
-//    btn3.titleLabel.textColor = [UIColor blackColor];
-//    [btn3 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    btn3.titleLabel.font = [UIFont systemFontOfSize:12];
-//    [self.view addSubview:btn3];
-//    UIButton* btn4 = [[UIButton alloc] initWithFrame:CGRectMake(btn3.right+2, search.bottom+2, 48, 30)];
-//    [btn4 setTitle:@"商品" forState:UIControlStateNormal];
-//    btn4.titleLabel.textColor = [UIColor blackColor];
-//    [btn4 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    btn4.titleLabel.font = [UIFont systemFontOfSize:12];
-//    [self.view addSubview:btn4];
+//    UIButton *search = [[UIButton alloc] initWithFrame:CGRectMake(1, view.bottom+2, self.view.frame.size.width-2, 24)];
+//    search.layer.borderWidth = 0.5;
+//    search.layer.cornerRadius = 12;
+//    search.layer.masksToBounds = YES;
+//    [self.view addSubview:search];
+//    UIImageView* searchImg = [[UIImageView alloc] initWithFrame:CGRectMake(10, 6, 12, 12)];
+//    [searchImg setImage:[UIImage imageNamed:@"ktv_ksong_searchbtn"]];
+//    [search addSubview:searchImg];
+//    UILabel* searchTitle = [[UILabel alloc] initWithFrame:CGRectMake(22+2, 4, search.width - 22-2, 16)];
+//    searchTitle.backgroundColor = [UIColor clearColor];
+//    searchTitle.font = [UIFont systemFontOfSize: 12];
+//    searchTitle.textColor = [UIColor grayColor];
+//    searchTitle.text = @"搜索活动";
+//    [search addSubview:searchTitle];
     
     
     DKScrollingTabController *leftTabController = [[DKScrollingTabController alloc] init];
@@ -96,7 +71,7 @@
     [self addChildViewController:leftTabController];
     [leftTabController didMoveToParentViewController:self];
     [self.view addSubview:leftTabController.view];
-    leftTabController.view.frame = CGRectMake(0, search.bottom+2, self.view.frame.size.width, 30);
+    leftTabController.view.frame = CGRectMake(0, view.bottom+2, self.view.frame.size.width, 30);
     leftTabController.view.backgroundColor = [UIColor clearColor];
     leftTabController.buttonPadding = 10;
     leftTabController.underlineIndicator = YES;
@@ -119,59 +94,66 @@
         button.titleLabel.numberOfLines = 1;
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
     }];
-    
-    //滚动图
-    //添加最后一张图 用于循环
-    int length = 4;
-    NSMutableArray *tempArray = [NSMutableArray array];
-    for (int i = 0 ; i < length; i++)
-    {
-        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"title%d",i],@"title" ,nil];
-        [tempArray addObject:dict];
-    }
-    NSMutableArray *itemArray = [NSMutableArray arrayWithCapacity:length+2];
-    if (length > 1)
-    {
-        NSDictionary *dict = [tempArray objectAtIndex:length-1];
-        SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:-1];
-        [itemArray addObject:item];
-    }
-    for (int i = 0; i < length; i++)
-    {
-        NSDictionary *dict = [tempArray objectAtIndex:i];
-        SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:i];
-        [itemArray addObject:item];
-        
-    }
-    //添加第一张图 用于循环
-    if (length >1)
-    {
-        NSDictionary *dict = [tempArray objectAtIndex:0];
-        SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:length];
-        [itemArray addObject:item];
-    }
-    __weak InTimeViewController*weakSelf = self;
-    SGFocusImageFrame *bannerView = [[SGFocusImageFrame alloc] initWithFrame:CGRectMake(0, leftTabController.view.bottom+2, 320, 140) delegate:weakSelf imageItems:itemArray isAuto:YES];
-    [bannerView scrollToIndex:2];
-    [self.view addSubview:bannerView];
-    
-    //列表
-    table = [[UITableView alloc] initWithFrame:CGRectMake(0, bannerView.bottom, self.view.frame.size.width, self.view.frame.size.height - bannerView.bottom -50) style:UITableViewStylePlain];
-    table.delegate = self;
-    table.dataSource = self;
-    table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-    table.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:table];
-    
-    self.messages = [[NSMutableArray alloc]init];
-    for (int i = 1; i < 6; i++) {
-        RecommendInfo* info = [[RecommendInfo alloc] init];
-        info.relatePersonNum = 100;
-        info.title = [NSString stringWithFormat:@"推荐众筹%d",i];
-        info.content = @"最新的技术，最新的产品";
-        info.date = @"2015-2-3 10:31";
-        [self.messages addObject:info];
-    }
+
+    UILabel* label = [[UILabel alloc] initWithFrame:CGRectMake(20, leftTabController.view.bottom+100, self.view.width - 40, 50)];
+    label.text = @"你的个人信息未通过审核，请真实填写完整的个人信息资料。";
+    label.textAlignment = NSTextAlignmentCenter;
+    label.lineBreakMode = NSLineBreakByCharWrapping;
+    label.numberOfLines = 3;
+    label.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:label];
+//    //滚动图
+//    //添加最后一张图 用于循环
+//    int length = 4;
+//    NSMutableArray *tempArray = [NSMutableArray array];
+//    for (int i = 0 ; i < length; i++)
+//    {
+//        NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"title%d",i],@"title" ,nil];
+//        [tempArray addObject:dict];
+//    }
+//    NSMutableArray *itemArray = [NSMutableArray arrayWithCapacity:length+2];
+//    if (length > 1)
+//    {
+//        NSDictionary *dict = [tempArray objectAtIndex:length-1];
+//        SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:-1];
+//        [itemArray addObject:item];
+//    }
+//    for (int i = 0; i < length; i++)
+//    {
+//        NSDictionary *dict = [tempArray objectAtIndex:i];
+//        SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:i];
+//        [itemArray addObject:item];
+//        
+//    }
+//    //添加第一张图 用于循环
+//    if (length >1)
+//    {
+//        NSDictionary *dict = [tempArray objectAtIndex:0];
+//        SGFocusImageItem *item = [[SGFocusImageItem alloc] initWithDict:dict tag:length];
+//        [itemArray addObject:item];
+//    }
+//    __weak InTimeViewController*weakSelf = self;
+//    SGFocusImageFrame *bannerView = [[SGFocusImageFrame alloc] initWithFrame:CGRectMake(0, leftTabController.view.bottom+2, 320, 140) delegate:weakSelf imageItems:itemArray isAuto:YES];
+//    [bannerView scrollToIndex:2];
+//    [self.view addSubview:bannerView];
+//    
+//    //列表
+//    table = [[UITableView alloc] initWithFrame:CGRectMake(0, bannerView.bottom, self.view.frame.size.width, self.view.frame.size.height - bannerView.bottom -50) style:UITableViewStylePlain];
+//    table.delegate = self;
+//    table.dataSource = self;
+//    table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+//    table.backgroundColor = [UIColor clearColor];
+//    [self.view addSubview:table];
+//    
+//    self.messages = [[NSMutableArray alloc]init];
+//    for (int i = 1; i < 6; i++) {
+//        RecommendInfo* info = [[RecommendInfo alloc] init];
+//        info.relatePersonNum = 100;
+//        info.title = [NSString stringWithFormat:@"推荐众筹%d",i];
+//        info.content = @"最新的技术，最新的产品";
+//        info.date = @"2015-2-3 10:31";
+//        [self.messages addObject:info];
+//    }
     
     _webServiceController = [WebServiceController shareController:self.view];
     
@@ -203,7 +185,7 @@
                 NSString *info = itemDic[@"trandate"];
                 [messages addObject:info];
             }
-            [table reloadData];
+            //[table reloadData];
         }
         //[MBProgressHUD hideHUDForView:self.view animated:YES];
     }];

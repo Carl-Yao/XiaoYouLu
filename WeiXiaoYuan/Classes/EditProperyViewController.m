@@ -42,7 +42,7 @@
     
     [self.view setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0]];
     
-    BackButton *returnButton = [[BackButton alloc] initWithFrame:CGRectMake(-2+10, -2+20 + 6, 150, 48-20)];
+    BackButton *returnButton = [[BackButton alloc] initWithFrame:CGRectMake(-2+10, -2+20 + 6, 90, 48-20)];
     [returnButton setTitle:@"返回" forState:UIControlStateNormal];
     //换返回按钮图标和文字
     UIImage *image1 = [UIImage imageNamed:@"biz_pics_main_back_normal.png"];
@@ -122,10 +122,22 @@
 
 - (void)btnClicked
 {
-    [_webServiceController SendHttpRequestWithMethod:@"/absapi/absuserinfo/update" argsDic:@{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, self.propery:self.textField.text, @"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-        [self dismissViewControllerAnimated:YES completion:nil];
-        [[KGProgressView windowProgressView] showErrorWithStatus:@"保存成功" duration:0.5];
-    }];
+    if (self.type == 0){
+        [_webServiceController SendHttpRequestWithMethod:@"/absapi/absuserinfo/update" argsDic:@{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, self.propery:self.textField.text, @"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+            [self dismissViewControllerAnimated:YES completion:nil];
+            [[KGProgressView windowProgressView] showErrorWithStatus:@"保存成功" duration:0.5];
+        }];
+    }else if (self.type == 1){
+        [_webServiceController SendHttpRequestWithMethod:@"/absapi/absuserschool/save" argsDic:@{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, self.propery:self.textField.text, @"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+            [self dismissViewControllerAnimated:YES completion:nil];
+            [[KGProgressView windowProgressView] showErrorWithStatus:@"保存成功" duration:0.5];
+        }];
+    }else if (self.type == 2){
+        [_webServiceController SendHttpRequestWithMethod:@"/absapi/absuserwork/updateByUserId" argsDic:@{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, self.propery:self.textField.text, @"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+            [self dismissViewControllerAnimated:YES completion:nil];
+            [[KGProgressView windowProgressView] showErrorWithStatus:@"保存成功" duration:0.5];
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

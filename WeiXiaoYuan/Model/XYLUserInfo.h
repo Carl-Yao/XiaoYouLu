@@ -28,4 +28,5 @@
 //@property(nonatomic, strong) NSString *register;
  @property(nonatomic, strong) NSString *sex;
 @property(nonatomic, strong) NSString *username;
+@property(nonatomic, strong) NSString *isvalid;
 @end

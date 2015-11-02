@@ -16,6 +16,8 @@
 #import "XYLUserInfoBLL.h"
 #import "SearchFriendViewController.h"
 #import "PersonInfoViewController.h"
+#import "ClassListViewController.h"
+#import "XYLCommonTableViewCell.h"
 
 @interface FunctionViewController()
 {
@@ -39,12 +41,6 @@
 {
     [super viewDidLoad];
     
-    // Set Stationary Background, so that while the user scroll the background is
-    // fixed.
-//    UIImage *bj = [UIImage imageNamed:@"bj.jpg"];
-//    UIImageView *bjview = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64-1, self.view.frame.size.width, self.view.frame.size.height - 64-49+1)];
-//    bjview.image = bj;
-//    [self.view insertSubview:bjview atIndex:0];
     //top
     CGRect rect;
     rect = [[UIApplication sharedApplication] statusBarFrame];
@@ -62,29 +58,31 @@
     
     [self.view setBackgroundColor:[UIColor colorWithRed:235.0/255.0 green:235.0/255.0 blue:235.0/255.0 alpha:1.0]];
     
-    BackButton *joinButton = [[BackButton alloc] initWithFrame:CGRectMake(self.view.width-64 -8, -2+20 + 6, 64, 48-20)];
-    [joinButton setTitle:@"添加" forState:UIControlStateNormal];
-    [self.view insertSubview:joinButton atIndex:1];
-    [joinButton addTarget:self action:@selector(btnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
+//    BackButton *joinButton = [[BackButton alloc] initWithFrame:CGRectMake(self.view.width-64 -8, -2+20 + 6, 64, 48-20)];
+//    [joinButton setTitle:@"添加" forState:UIControlStateNormal];
+//    [self.view insertSubview:joinButton atIndex:1];
+//    [joinButton addTarget:self action:@selector(btnClicked:event:) forControlEvents:UIControlEventTouchUpInside];
+    if ([[XYLUserInfoBLL shareUserInfoBLL].userInfo.isvalid isEqualToString:@"1"]) {
+        UIButton *search = [[UIButton alloc] initWithFrame:CGRectMake(1, view.bottom+6, self.view.frame.size.width-2, 24)];
+        search.layer.borderWidth = 0.5;
+        search.layer.cornerRadius = 12;
+        search.layer.masksToBounds = YES;
+        [self.view addSubview:search];
+        [search addTarget:self action:@selector(searchBtn) forControlEvents:UIControlEventTouchUpInside];
+        UIImageView* searchImg = [[UIImageView alloc] initWithFrame:CGRectMake(10, 6, 12, 12)];
+        [searchImg setImage:[UIImage imageNamed:@"ktv_ksong_searchbtn"]];
+        [search addSubview:searchImg];
+        UILabel* searchTitle = [[UILabel alloc] initWithFrame:CGRectMake(22+2, 4, search.width - 22-2, 16)];
+        searchTitle.backgroundColor = [UIColor clearColor];
+        searchTitle.font = [UIFont systemFontOfSize: 12];
+        searchTitle.textColor = [UIColor grayColor];
+        searchTitle.text = @"同城搜索／同行业搜索";
+        [search addSubview:searchTitle];
+        table = [[UITableView alloc] initWithFrame:CGRectMake(0, search.bottom, self.view.frame.size.width, self.view.frame.size.height - search.bottom -50) style:UITableViewStylePlain];
+    }else{
+        table = [[UITableView alloc] initWithFrame:CGRectMake(0, view.bottom, self.view.frame.size.width, self.view.frame.size.height - view.bottom -50) style:UITableViewStylePlain];
+    }
     
-    UIButton *search = [[UIButton alloc] initWithFrame:CGRectMake(1, view.bottom+6, self.view.frame.size.width-2, 24)];
-    search.layer.borderWidth = 0.5;
-    search.layer.cornerRadius = 12;
-    search.layer.masksToBounds = YES;
-    [self.view addSubview:search];
-    [search addTarget:self action:@selector(searchBtn) forControlEvents:UIControlEventTouchUpInside];
-    UIImageView* searchImg = [[UIImageView alloc] initWithFrame:CGRectMake(10, 6, 12, 12)];
-    [searchImg setImage:[UIImage imageNamed:@"ktv_ksong_searchbtn"]];
-    [search addSubview:searchImg];
-    UILabel* searchTitle = [[UILabel alloc] initWithFrame:CGRectMake(22+2, 4, search.width - 22-2, 16)];
-    searchTitle.backgroundColor = [UIColor clearColor];
-    searchTitle.font = [UIFont systemFontOfSize: 12];
-    searchTitle.textColor = [UIColor grayColor];
-    searchTitle.text = @"同城搜索／同行业搜索";
-    [search addSubview:searchTitle];
-    
-    //列表
-    table = [[UITableView alloc] initWithFrame:CGRectMake(0, search.bottom, self.view.frame.size.width, self.view.frame.size.height - search.bottom -50) style:UITableViewStylePlain];
     table.delegate = self;
     table.dataSource = self;
     table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -92,7 +90,7 @@
     [self.view addSubview:table];
     friends = [[NSMutableArray alloc]init];
     [friends addObject:@"新的朋友"];
-    //[friends addObject:@"群聊"];
+    [friends addObject:@"班级通讯录"];
     [table reloadData];
     _webServiceController = [WebServiceController shareController:self.view];
 }
@@ -108,7 +106,7 @@
             if (dataArr) {
                 friends = [[NSMutableArray alloc]init];
                 [friends addObject:@"新的朋友"];
-                //[friends addObject:@"群聊"];
+                [friends addObject:@"班级通讯录"];
                 for (NSDictionary* itemDic in dataArr) {
                     NSString *info = itemDic[@"friendsName"]?:@"NULL";
                     [friends addObject:info];
@@ -130,15 +128,39 @@
 {
     static NSString *CellIdentifier = @"Cell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    XYLCommonTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        cell = [[XYLCommonTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         cell.backgroundColor = [UIColor clearColor];
         cell.contentView.backgroundColor = [UIColor clearColor];
     }
     cell.textLabel.text = [friends objectAtIndex: indexPath.row];
-    //cell.rightContent = [friends objectAtIndex: indexPath.row];
+    if (indexPath.row < 2) {
+        cell.rightBtn.hidden = YES;
+    }else{
+        if ([[XYLUserInfoBLL shareUserInfoBLL].userInfo.isvalid isEqualToString:@"1"]){
+            cell.rightBtn.hidden = NO;
+            if ([@"1" isEqualToString:dataArr[indexPath.row-2][@"isvalid"]]) {
+                [cell.rightBtn setImage:[UIImage imageNamed:@"已认证.png"] forState:UIControlStateNormal];
+                cell.rightBtn.userInteractionEnabled = NO;
+            }else{
+                [cell.rightBtn setImage:[UIImage imageNamed:@"帮他认证.png"] forState:UIControlStateNormal];
+                cell.rightBtn.userInteractionEnabled = YES;
+                cell.friendId = dataArr[indexPath.row-2][@"friendsId"];
+            }
+        }else{
+            cell.rightBtn.hidden = NO;
+            if ([dataArr[indexPath.row-2][@"isvalid"] isEqualToString:@"1"]) {
+                [cell.rightBtn setImage:[UIImage imageNamed:@"已认证.png"] forState:UIControlStateNormal];
+                cell.rightBtn.userInteractionEnabled = NO;
+            }else{
+                cell.rightBtn.hidden = YES;
+                [cell.rightBtn setImage:[UIImage imageNamed:@"帮他认证.png"] forState:UIControlStateNormal];
+                cell.rightBtn.userInteractionEnabled = YES;
+            }
+        }
+    }
     return cell;
 }
 
@@ -147,11 +169,14 @@
     if (indexPath.row == 0){
         NewFriendListViewController* vc = [[NewFriendListViewController alloc] init];
         [self presentViewController:vc animated:YES completion:nil];
+    }else if (indexPath.row == 1){
+        ClassListViewController* vc = [[ClassListViewController alloc] init];
+        [self presentViewController:vc animated:YES completion:nil];
     }else{
         PersonInfoViewController* vc = [[PersonInfoViewController alloc] init];
         vc.isOwn = NO;
-        vc.userId = dataArr[indexPath.row-1][@"friendsId"];
-        [self presentViewController:vc animated:YES completion:nil];
+        vc.userId = dataArr[indexPath.row-2][@"friendsId"];
+        //[self presentViewController:vc animated:YES completion:nil];
     }
 }
 

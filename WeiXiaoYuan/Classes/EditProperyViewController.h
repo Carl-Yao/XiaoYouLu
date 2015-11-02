@@ -16,5 +16,5 @@
 @property (nonatomic,strong)NSString* titleStr;
 @property (nonatomic,strong)NSString* propery;
 @property (nonatomic, strong) UITextView * textField;
-
+@property (nonatomic,assign)NSInteger type;//0:基本 1:学校 2:工作
 @end

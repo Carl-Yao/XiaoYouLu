@@ -102,6 +102,7 @@
     //[BPush bindChannel];
 
     XYLUserInfo* userInfo = [[XYLUserInfo alloc] initWithDictionary:result[@"data"] error:nil];
+    
     XYLUserInfoBLL* bll = [XYLUserInfoBLL shareUserInfoBLL];
     bll.userInfo = userInfo;
     bll.token = result[@"token"];
@@ -138,7 +139,7 @@
     vc3.tabBarItem.image = [UIImage imageNamed:@"icon_selfinfo_nor1.png"];
     vc3.tabBarItem.title = @"通讯录";
     SettingViewController *vc4 = [[SettingViewController alloc] init];
-    vc4.tabBarItem.image = [UIImage imageNamed:@"icon_selfinfo_sel.png"];
+    vc4.tabBarItem.image = [UIImage imageNamed:@"icon_selfinfo_nor.png"];
     vc4.tabBarItem.title = @"我的";
     [tabController setViewControllers:@[vc1,vc2,vc3,vc4]];
     
