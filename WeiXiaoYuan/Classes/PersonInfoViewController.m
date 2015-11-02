@@ -197,8 +197,8 @@
                 
                 item = [[NSMutableDictionary alloc]init];
                 [item setObject:@"专业" forKey:@"title"];
-                [item setObject:dic[@"prof"]?:@"" forKey:@"content"];
-                [item setObject:@"prof" forKey:@"propery"];
+                [item setObject:dic[@"profDesc"]?:@"" forKey:@"content"];
+                [item setObject:@"profDesc" forKey:@"propery"];
                 [schoolPropretys addObject:item];
                 
                 item = [[NSMutableDictionary alloc]init];
@@ -401,6 +401,7 @@
         || [proName isEqualToString:@"areaName"]
         || [proName isEqualToString:@"className"]
         || [proName isEqualToString:@"academyDesc"]
+        || [proName isEqualToString:@"profDesc"]
         || [proName isEqualToString:@"schoolDesc"]) {
         if ([proName isEqualToString:@"sex"]) {
             pickList = [[NSArray alloc]initWithObjects:@"男",@"女",nil];
@@ -467,7 +468,6 @@
                 }];
             }
         }
-        
         else if([proName isEqualToString:@"schoolDesc"]){
             NSString *str = @"/absapi/abscollege/queryByParentId";
             [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":@"0",@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
@@ -480,12 +480,13 @@
                 [pickview show];
             }];
             
-        }else if([proName isEqualToString:@"academyDesc"]){
-            NSString* provCode = dataDic[@"absUserSchool"][@"academy"];
+        }
+        else if([proName isEqualToString:@"academyDesc"]){
+            NSString* schoolId = dataDic[@"absUserSchool"][@"schoolId"];
             
-            if (provCode) {
+            if (schoolId) {
                 NSString *str = @"/absapi/abscollege/queryByParentId";
-                [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":provCode,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+                [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":schoolId,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
                     pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
                     //[MBProgressHUD hideHUDForView:self.view animated:YES];
                     pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
@@ -495,12 +496,29 @@
                     [pickview show];
                 }];
             }
-        }else if([proName isEqualToString:@"classId"]){
-            NSString* citiCode = dataDic[@"absUserSchool"][@"classId"];
-            
-            if (citiCode) {
+        }
+        else if([proName isEqualToString:@"profDesc"]){
+            NSString* academy = dataDic[@"absUserSchool"][@"academy"];
+            if (academy)
+            {
                 NSString *str = @"/absapi/abscollege/queryByParentId";
-                [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":citiCode,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+                [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":academy,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+                    pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
+                    
+                    pickview = [[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
+                    
+                    pickview.delegate=self;
+                    myIndexPath = indexPath;
+                    [pickview show];
+                }];
+            }
+        }
+        else if([proName isEqualToString:@"classId"]){
+            NSString* prof = dataDic[@"absUserSchool"][@"prof"];
+            
+            if (prof) {
+                NSString *str = @"/absapi/abscollege/queryByParentId";
+                [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":prof,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
                     pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
                     //[MBProgressHUD hideHUDForView:self.view animated:YES];
                     pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];

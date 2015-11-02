@@ -4408,7 +4408,7 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/ChangePasswordViewController.m"
-                  timestampString = "468182857.642477"
+                  timestampString = "468185302.017228"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "64"
@@ -4423,7 +4423,7 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/ChangePasswordViewController.m"
-                  timestampString = "468182857.642782"
+                  timestampString = "468185302.017628"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "64"
@@ -4456,7 +4456,7 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/NewFriendListViewController.m"
-                  timestampString = "468182857.644468"
+                  timestampString = "468185302.020227"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "126"
@@ -4471,7 +4471,7 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/NewFriendListViewController.m"
-                  timestampString = "468182857.644839"
+                  timestampString = "468185302.021245"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "126"
@@ -4504,7 +4504,7 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/SearchFriendViewController.m"
-                  timestampString = "468182857.647516"
+                  timestampString = "468185302.024066"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "243"
@@ -4519,7 +4519,7 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/SearchFriendViewController.m"
-                  timestampString = "468182857.647973"
+                  timestampString = "468185302.024732"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "243"
@@ -4648,11 +4648,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeiXiaoYuan/Classes/PersonInfoViewController.m"
-            timestampString = "468181966.665174"
+            timestampString = "468185301.355399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "552"
-            endingLineNumber = "552"
+            startingLineNumber = "570"
+            endingLineNumber = "570"
             landmarkName = "-toobarDonBtnHaveClick:resultString:"
             landmarkType = "5">
             <Locations>
@@ -4664,11 +4664,11 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/PersonInfoViewController.m"
-                  timestampString = "468182857.698195"
+                  timestampString = "468185302.034177"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "552"
-                  endingLineNumber = "552"
+                  startingLineNumber = "570"
+                  endingLineNumber = "570"
                   offsetFromSymbolStart = "1893">
                </Location>
                <Location
@@ -4679,11 +4679,11 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/PersonInfoViewController.m"
-                  timestampString = "468182857.698585"
+                  timestampString = "468185302.034478"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "552"
-                  endingLineNumber = "552"
+                  startingLineNumber = "570"
+                  endingLineNumber = "570"
                   offsetFromSymbolStart = "43">
                </Location>
             </Locations>
@@ -4712,7 +4712,7 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/XYLCommonTableViewCell.m"
-                  timestampString = "468182857.702723"
+                  timestampString = "468185302.036081"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"
@@ -4727,7 +4727,7 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/XYLCommonTableViewCell.m"
-                  timestampString = "468182857.703302"
+                  timestampString = "468185302.036326"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"
@@ -4760,7 +4760,7 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/ClassListViewController.m"
-                  timestampString = "468182857.70539"
+                  timestampString = "468185302.038408"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "88"
@@ -4775,7 +4775,7 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/ClassListViewController.m"
-                  timestampString = "468182857.705707"
+                  timestampString = "468185302.038728"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "88"
@@ -4792,11 +4792,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeiXiaoYuan/Classes/PersonInfoViewController.m"
-            timestampString = "468178871.158194"
+            timestampString = "468185301.355399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "422"
-            endingLineNumber = "422"
+            startingLineNumber = "423"
+            endingLineNumber = "423"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4808,11 +4808,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeiXiaoYuan/Classes/PersonInfoViewController.m"
-            timestampString = "468178856.522409"
+            timestampString = "468185301.355399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "440"
-            endingLineNumber = "440"
+            startingLineNumber = "441"
+            endingLineNumber = "441"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
             <Locations>
@@ -4824,12 +4824,12 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/PersonInfoViewController.m"
-                  timestampString = "468182857.727212"
+                  timestampString = "468185302.04151"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "440"
-                  endingLineNumber = "440"
-                  offsetFromSymbolStart = "3321">
+                  startingLineNumber = "441"
+                  endingLineNumber = "441"
+                  offsetFromSymbolStart = "3361">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -4839,11 +4839,11 @@
                   moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/PersonInfoViewController.m"
-                  timestampString = "468182857.72784"
+                  timestampString = "468185302.041783"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "440"
-                  endingLineNumber = "440"
+                  startingLineNumber = "441"
+                  endingLineNumber = "441"
                   offsetFromSymbolStart = "36">
                </Location>
             </Locations>
@@ -4856,11 +4856,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeiXiaoYuan/Classes/PersonInfoViewController.m"
-            timestampString = "468181822.744633"
+            timestampString = "468185301.355399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "486"
-            endingLineNumber = "486"
+            startingLineNumber = "487"
+            endingLineNumber = "487"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4872,59 +4872,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeiXiaoYuan/Classes/PersonInfoViewController.m"
-            timestampString = "468181826.74868"
+            timestampString = "468185301.355399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "473"
-            endingLineNumber = "473"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[PersonInfoViewController tableView:didSelectRowAtIndexPath:]"
-                  moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/PersonInfoViewController.m"
-                  timestampString = "468182857.821115"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "473"
-                  endingLineNumber = "473"
-                  offsetFromSymbolStart = "4956">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__62-[PersonInfoViewController tableView:didSelectRowAtIndexPath:]_block_invoke319"
-                  moduleName = "&#x5e7f;&#x5916;&#x6821;&#x53cb;"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/ZhenxingYao/XiaoYouLu/WeiXiaoYuan/Classes/PersonInfoViewController.m"
-                  timestampString = "468182857.821739"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "473"
-                  endingLineNumber = "473"
-                  offsetFromSymbolStart = "36">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WeiXiaoYuan/Classes/PersonInfoViewController.m"
-            timestampString = "468181898.229291"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "501"
-            endingLineNumber = "501"
+            startingLineNumber = "519"
+            endingLineNumber = "519"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4936,11 +4888,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeiXiaoYuan/Classes/PersonInfoViewController.m"
-            timestampString = "468181899.543526"
+            timestampString = "468185301.355399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "504"
-            endingLineNumber = "504"
+            startingLineNumber = "522"
+            endingLineNumber = "522"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4952,11 +4904,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WeiXiaoYuan/Classes/PersonInfoViewController.m"
-            timestampString = "468182077.658708"
+            timestampString = "468185301.355399"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "472"
-            endingLineNumber = "472"
+            startingLineNumber = "442"
+            endingLineNumber = "442"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -4967,29 +4919,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "WeiXiaoYuan/Classes/PersonInfoViewController.m"
-            timestampString = "468182475.947191"
+            filePath = "WeiXiaoYuan/Plugins/WebServiceController.m"
+            timestampString = "468184690.683301"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "441"
-            endingLineNumber = "441"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WeiXiaoYuan/Classes/PersonInfoViewController.m"
-            timestampString = "468182531.291403"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "474"
-            endingLineNumber = "474"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-SendHttpRequestWithMethod:argsDic:success:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
