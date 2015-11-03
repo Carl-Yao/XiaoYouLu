@@ -111,7 +111,7 @@
     
     NSMutableArray *itemsArray = [[NSMutableArray alloc] init];
     NSArray *controllerArray = [NSArray arrayWithObjects:@"InTimeViewController",@"WenZhangViewController",@"FunctionViewController",@"SettingViewController" ,nil];//类名数组
-    NSArray *titleArray = [NSArray arrayWithObjects:@"众筹",@"文章",@"通讯录",@"我的", nil];//item标题数组
+    NSArray *titleArray = [NSArray arrayWithObjects:@"众筹",@"资源",@"通讯录",@"我的", nil];//item标题数组
     NSArray *normalImageArray = [NSArray arrayWithObjects:@"icon_square_nor.png",@"icon_meassage_nor.png",@"icon_selfinfo_nor1.png",@"icon_selfinfo_nor.png", nil];//item 正常状态下的背景图片
     NSArray *selectedImageArray = [NSArray arrayWithObjects:@"icon_square_sel.png",@"icon_meassage_sel.png",@"icon_selfinfo_sel1.png",@"icon_selfinfo_sel.png",nil];//item被选中时的图片名称
     

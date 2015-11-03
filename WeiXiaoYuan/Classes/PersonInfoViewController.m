@@ -26,7 +26,8 @@
     NSMutableArray* userPropretys;
     NSMutableArray* schoolPropretys;
     NSMutableArray* workPropretys;
-    NSArray* pickList;
+    NSMutableArray* pickList;
+    NSMutableArray* pickDicList;
     NSIndexPath* myIndexPath;
     ZHPickView* pickview;
 }
@@ -419,14 +420,10 @@
             [pickview show];
         }else if([proName isEqualToString:@"provName"]){
             NSString *str = @"/absapi/absarea/queryByParentId";
-            [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":@"1",@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-                pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
-                
-                pickview = [[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
-                
-                pickview.delegate=self;
+            [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":@"0",@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+                pickDicList = dic[@"data"];
                 myIndexPath = indexPath;
-                [pickview show];
+                [self showPick];
             }];
             
         }else if([proName isEqualToString:@"cityName"]){
@@ -439,13 +436,9 @@
             if (provCode) {
                 NSString *str = @"/absapi/absarea/queryByParentId";
                 [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":provCode,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-                    pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
-                    //[MBProgressHUD hideHUDForView:self.view animated:YES];
-                    pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
-                    
-                    pickview.delegate=self;
+                    pickDicList = dic[@"data"];
                     myIndexPath = indexPath;
-                    [pickview show];
+                    [self showPick];
                 }];
             }
         }else if([proName isEqualToString:@"areaName"]){
@@ -458,26 +451,18 @@
             if (cityCode) {
                 NSString *str = @"/absapi/absarea/queryByParentId";
                 [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":cityCode,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-                    pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
-                    //[MBProgressHUD hideHUDForView:self.view animated:YES];
-                    pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
-                    
-                    pickview.delegate=self;
+                    pickDicList = dic[@"data"];
                     myIndexPath = indexPath;
-                    [pickview show];
+                    [self showPick];
                 }];
             }
         }
         else if([proName isEqualToString:@"schoolDesc"]){
             NSString *str = @"/absapi/abscollege/queryByParentId";
             [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":@"0",@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-                pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
-                
-                pickview = [[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
-                
-                pickview.delegate=self;
+                pickDicList = dic[@"data"];
                 myIndexPath = indexPath;
-                [pickview show];
+                [self showPick];
             }];
             
         }
@@ -487,13 +472,9 @@
             if (schoolId) {
                 NSString *str = @"/absapi/abscollege/queryByParentId";
                 [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":schoolId,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-                    pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
-                    //[MBProgressHUD hideHUDForView:self.view animated:YES];
-                    pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
-                    
-                    pickview.delegate=self;
+                    pickDicList = dic[@"data"];
                     myIndexPath = indexPath;
-                    [pickview show];
+                    [self showPick];
                 }];
             }
         }
@@ -503,13 +484,9 @@
             {
                 NSString *str = @"/absapi/abscollege/queryByParentId";
                 [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":academy,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-                    pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
-                    
-                    pickview = [[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
-                    
-                    pickview.delegate=self;
+                    pickDicList = dic[@"data"];
                     myIndexPath = indexPath;
-                    [pickview show];
+                    [self showPick];
                 }];
             }
         }
@@ -519,24 +496,38 @@
             if (prof) {
                 NSString *str = @"/absapi/abscollege/queryByParentId";
                 [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":prof,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-                    pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
-                    //[MBProgressHUD hideHUDForView:self.view animated:YES];
-                    pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
-                    
-                    pickview.delegate=self;
+                    pickDicList = dic[@"data"];
                     myIndexPath = indexPath;
-                    [pickview show];
+                    [self showPick];
                 }];
             }
         }
-        
-        return;
+    }else if ([proName isEqualToString:@"provName"]){
+        //不可以编辑
+    }else{
+        EditProperyViewController* vc = [[EditProperyViewController alloc] init];
+        vc.titleStr = userPropretys[indexPath.row][@"title"];
+        vc.type = indexPath.section;
+        vc.propery = userPropretys[indexPath.row][@"propery"];
+        [self presentViewController:vc animated:YES completion:nil];
     }
-    EditProperyViewController* vc = [[EditProperyViewController alloc] init];
-    vc.titleStr = userPropretys[indexPath.row][@"title"];
-    vc.type = indexPath.section;
-    vc.propery = userPropretys[indexPath.row][@"propery"];
-    [self presentViewController:vc animated:YES completion:nil];
+}
+
+-(void)showPick
+{
+    if (pickDicList) {
+        pickList = [[NSMutableArray alloc] init];
+        for (NSDictionary* item in pickDicList) {
+            if (item[@"name"] && [item[@"name"] isKindOfClass:[NSString class]]) {
+                [pickList addObject:item[@"name"]];
+            }
+        }
+        
+        pickview = [[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
+        
+        pickview.delegate=self;
+        [pickview show];
+    }
 }
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -556,6 +547,8 @@
         dic = @{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, @"sex":resultString, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
     }else if([userPropretys[myIndexPath.row][@"propery"] isEqualToString: @"isvalid"]) {
         dic = @{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, @"isvalid":resultString, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+    }else{
+        
     }
     
     NSString* str;
