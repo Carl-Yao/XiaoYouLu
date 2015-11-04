@@ -117,7 +117,7 @@ static METHOD_TYPE _methodType;
             if ([retDic[@"message"] isEqualToString:@"success"] || [retDic[@"resultcode"] isEqualToString:@"0"]){
                 successDicBlock(retDic);
             }else{
-                [[KGProgressView windowProgressView] showErrorWithStatus:@"请求失败" duration:0.5];
+                //[[KGProgressView windowProgressView] showErrorWithStatus:@"请求失败" duration:0.5];
             }
         }else{
             [[KGProgressView windowProgressView] showErrorWithStatus:@"请求失败:无返回数据" duration:0.5];

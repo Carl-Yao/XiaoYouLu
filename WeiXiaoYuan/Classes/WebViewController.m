@@ -33,7 +33,7 @@
     UIImageView *view = [[UIImageView alloc]initWithFrame:CGRectMake(-2, -2, self.view.frame.size.width+4, 34+2+rect.size.height)];
     view.backgroundColor = [UIColor colorWithHexString:@"#49c9d6"];
     [self.view insertSubview:view atIndex:0];
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     //title
     UILabel *laber = [[UILabel alloc]initWithFrame:CGRectMake(0, rect.size.height+1, self.view.frame.size.width , 34)];
     laber.text = [NSString stringWithFormat:@"%@",self.titleStr,nil];

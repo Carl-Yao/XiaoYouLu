@@ -35,7 +35,9 @@
     NSString *str = @"/absapi/absuserinfo/updateValidById";
     [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"id":self.friendId,@"token":[XYLUserInfoBLL shareUserInfoBLL].token,@"isvalid":@"1"} success:^(NSDictionary* dic){
         [[KGProgressView windowProgressView] showSuccessWithStatus:@"申请成功" duration:0.5];
-        //[MBProgressHUD hideHUDForView:self.view animated:YES];
+        [self.rightBtn setImage:[UIImage imageNamed:@"已认证.png"] forState:UIControlStateNormal];
+        self.rightBtn.userInteractionEnabled = NO;
+
     }];
 }
 - (void)setFrame:(CGRect)frame

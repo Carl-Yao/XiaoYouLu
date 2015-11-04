@@ -128,12 +128,12 @@
             [[KGProgressView windowProgressView] showErrorWithStatus:@"保存成功" duration:0.5];
         }];
     }else if (self.type == 1){
-        [_webServiceController SendHttpRequestWithMethod:@"/absapi/absuserschool/save" argsDic:@{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, self.propery:self.textField.text, @"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+        [_webServiceController SendHttpRequestWithMethod:@"/absapi/absuserschool/save" argsDic:@{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, self.propery:self.textField.text, @"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
             [self dismissViewControllerAnimated:YES completion:nil];
             [[KGProgressView windowProgressView] showErrorWithStatus:@"保存成功" duration:0.5];
         }];
     }else if (self.type == 2){
-        [_webServiceController SendHttpRequestWithMethod:@"/absapi/absuserwork/updateByUserId" argsDic:@{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, self.propery:self.textField.text, @"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+        [_webServiceController SendHttpRequestWithMethod:@"/absapi/absuserwork/updateByUserId" argsDic:@{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, self.propery:self.textField.text, @"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
             [self dismissViewControllerAnimated:YES completion:nil];
             [[KGProgressView windowProgressView] showErrorWithStatus:@"保存成功" duration:0.5];
         }];

@@ -62,7 +62,7 @@
     
     //title
     UILabel *laber = [[UILabel alloc]initWithFrame:CGRectMake(0, rect.size.height+1, self.view.frame.size.width , 34)];
-    laber.text = @"文章";
+    laber.text = @"资源";
     laber.textColor = [UIColor blackColor];
     laber.font = [UIFont boldSystemFontOfSize:20];
     laber.textAlignment = NSTextAlignmentCenter;
@@ -100,6 +100,12 @@
     }];
     
     if ([[XYLUserInfoBLL shareUserInfoBLL].userInfo.isvalid isEqualToString:@"1"]){
+        table = [[UITableView alloc] initWithFrame:CGRectMake(0, leftTabController.view.bottom+4, self.view.frame.size.width, self.view.frame.size.height - leftTabController.view.bottom -50) style:UITableViewStylePlain];
+        table.delegate = self;
+        table.dataSource = self;
+        table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        table.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:table];
         //列表
 //        table = [[UITableView alloc] initWithFrame:CGRectMake(0, leftTabController.view.bottom+4, self.view.frame.size.width, self.view.frame.size.height - leftTabController.view.bottom -50) style:UITableViewStylePlain];
 //        table.delegate = self;
@@ -144,12 +150,6 @@
     //});
     if ([[XYLUserInfoBLL shareUserInfoBLL].userInfo.isvalid isEqualToString:@"1"]){
         //列表
-        table = [[UITableView alloc] initWithFrame:CGRectMake(0, leftTabController.view.bottom+4, self.view.frame.size.width, self.view.frame.size.height - leftTabController.view.bottom -50) style:UITableViewStylePlain];
-        table.delegate = self;
-        table.dataSource = self;
-        table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
-        table.backgroundColor = [UIColor clearColor];
-        [self.view addSubview:table];
         selectIndex = 0;
         _webServiceController = [WebServiceController shareController:self.view];
         NSString* str = @"/absapi/absarticle/search";
@@ -222,30 +222,30 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([[XYLUserInfoBLL shareUserInfoBLL].userInfo.isvalid isEqualToString:@"1"]){
-    NSString* str;
-    if (selectIndex == 1) {
-        str = @"/absapi/abssource/viewSourceDetail";
-        [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"id":dataArr[indexPath.row][@"id"],@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-            NSDictionary* dataDic = dic[@"data"];
-            
-            DetailForMessageViewController* controller = [[DetailForMessageViewController alloc] init];
-            RecommendInfo* info = [[RecommendInfo alloc] init];
-            info.title = dataDic[@"title"];
-            info.content = dataDic[@"context"];
-            //info.date = @"date";
-            info.relatePersonNum = 0;//dataDic[@""];
-            //info.imgUrl
-            controller.recommendInfo = info;
+        NSString* str;
+        if (selectIndex == 1) {
+            str = @"/absapi/abssource/viewSourceDetail";
+            [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"id":dataArr[indexPath.row][@"id"],@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
+                NSDictionary* dataDic = dic[@"data"];
+                
+                DetailForMessageViewController* controller = [[DetailForMessageViewController alloc] init];
+                RecommendInfo* info = [[RecommendInfo alloc] init];
+                info.title = dataDic[@"title"];
+                info.content = dataDic[@"context"];
+                //info.date = @"date";
+                info.relatePersonNum = 0;//dataDic[@""];
+                //info.imgUrl
+                controller.recommendInfo = info;
+                [self presentViewController:controller animated:YES completion:nil];
+                //[MBProgressHUD hideHUDForView:self.view animated:YES];
+            }];
+        }else{
+            str = @"/absapi/absarticle/viewArticleDetail";
+            WebViewController* controller = [[ WebViewController alloc ]init];
+            controller.titleStr = dataArr[indexPath.row][@"title"];
+            controller.wzId = dataArr[indexPath.row][@"id"]?:@"NULL";
             [self presentViewController:controller animated:YES completion:nil];
-            //[MBProgressHUD hideHUDForView:self.view animated:YES];
-        }];
-    }else{
-        str = @"/absapi/absarticle/viewArticleDetail";
-        WebViewController* controller = [[ WebViewController alloc ]init];
-        controller.titleStr = dataArr[indexPath.row][@"title"];
-        controller.wzId = dataArr[indexPath.row][@"id"]?:@"NULL";
-        [self presentViewController:controller animated:YES completion:nil];
-    }
+        }
     }
 }
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath

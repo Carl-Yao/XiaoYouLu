@@ -30,6 +30,7 @@
     NSMutableArray* pickDicList;
     NSIndexPath* myIndexPath;
     ZHPickView* pickview;
+    NSString* selectProp;
 }
 @end
 
@@ -43,6 +44,9 @@
 
 - (void)btnClicked:(id)sender event:(id)event
 {
+    if (pickview){
+        [pickview remove];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)viewDidLoad {
@@ -87,11 +91,9 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-//    [_webServiceController SendHttpRequestWithMethod:url argsDic:dicArg success:^(NSDictionary* dic){
-//        [_webServiceController SendHttpRequestWithMethod:url argsDic:dicArg success:^(NSDictionary* dic){
-//        }];
-//    }];
-    
+    [self refresh];
+}
+- (void)refresh{
     NSString* url;
     NSDictionary* dicArg;
     if (self.isOwn) {
@@ -169,7 +171,7 @@
                 
                 item = [[NSMutableDictionary alloc]init];
                 [item setObject:@"是否公开" forKey:@"title"];
-                [item setObject:dic[@"isvalid"]?:@"" forKey:@"content"];
+                [item setObject:(dic[@"isvalid"]&&[dic[@"isvalid"] isEqualToString:@"1"])?@"是":@"否" forKey:@"content"];
                 [item setObject:@"isvalid" forKey:@"propery"];
                 [userPropretys addObject:item];
             }
@@ -187,7 +189,7 @@
                 item = [[NSMutableDictionary alloc]init];
                 [item setObject:@"入学年份" forKey:@"title"];
                 [item setObject:(NSString*)(dic[@"inSchoolYear"]?:@"") forKey:@"content"];
-                [item setObject:@"inSchoolDate" forKey:@"propery"];
+                [item setObject:@"inSchoolYear" forKey:@"propery"];
                 [schoolPropretys addObject:item];
                 
                 item = [[NSMutableDictionary alloc]init];
@@ -204,13 +206,13 @@
                 
                 item = [[NSMutableDictionary alloc]init];
                 [item setObject:@"班级" forKey:@"title"];
-                [item setObject:dic[@"classNme"]?:@"" forKey:@"content"];
-                [item setObject:@"classNme" forKey:@"propery"];
+                [item setObject:dic[@"className"]?:@"" forKey:@"content"];
+                [item setObject:@"className" forKey:@"propery"];
                 [schoolPropretys addObject:item];
                 
                 item = [[NSMutableDictionary alloc]init];
                 [item setObject:@"是否公开" forKey:@"title"];
-                [item setObject:dic[@"isvalid"]?:@"" forKey:@"content"];
+                [item setObject:(dic[@"isvalid"]&&[dic[@"isvalid"] isEqualToString:@"1"])?@"是":@"否" forKey:@"content"];
                 [item setObject:@"isvalid" forKey:@"propery"];
                 [schoolPropretys addObject:item];
             }
@@ -258,7 +260,7 @@
                 
                 item = [[NSMutableDictionary alloc]init];
                 [item setObject:@"是否公开" forKey:@"title"];
-                [item setObject:dic[@"isvalid"]?:@"" forKey:@"content"];
+                [item setObject:(dic[@"isvalid"]&&[dic[@"isvalid"] isEqualToString:@"1"])?@"是":@"否" forKey:@"content"];
                 [item setObject:@"isvalid" forKey:@"propery"];
                 [workPropretys addObject:item];
             }
@@ -267,6 +269,7 @@
         }
         //[MBProgressHUD hideHUDForView:self.view animated:YES];
     }];
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -377,6 +380,10 @@
         return;
     }
     
+    if (pickview){
+        [pickview remove];
+    }
+    
     NSString *proName;
     NSString *titleName;
     switch (indexPath.section) {
@@ -403,18 +410,27 @@
         || [proName isEqualToString:@"className"]
         || [proName isEqualToString:@"academyDesc"]
         || [proName isEqualToString:@"profDesc"]
-        || [proName isEqualToString:@"schoolDesc"]) {
+        || [proName isEqualToString:@"schoolDesc"]
+        || [proName isEqualToString:@"inSchoolYear"]) {
         if ([proName isEqualToString:@"sex"]) {
-            pickList = [[NSArray alloc]initWithObjects:@"男",@"女",nil];
+            pickList = [[NSMutableArray alloc]initWithObjects:@"男",@"女",nil];
             pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
-            
+            selectProp = @"sex";
             pickview.delegate=self;
             myIndexPath = indexPath;
             [pickview show];
         }else if([proName isEqualToString:@"isvalid"]){
-            pickList = [[NSArray alloc]initWithObjects:@"是",@"否",nil];
+            pickList = [[NSMutableArray alloc]initWithObjects:@"是",@"否",nil];
             pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
-            
+            selectProp = @"isvalid";
+            pickview.delegate=self;
+            myIndexPath = indexPath;
+            [pickview show];
+        }
+        else if([proName isEqualToString:@"className"]){
+            pickList = [[NSMutableArray alloc]initWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",nil];
+            pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
+            selectProp = @"className";
             pickview.delegate=self;
             myIndexPath = indexPath;
             [pickview show];
@@ -423,6 +439,7 @@
             [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":@"0",@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
                 pickDicList = dic[@"data"];
                 myIndexPath = indexPath;
+                selectProp = @"provCode";
                 [self showPick];
             }];
             
@@ -438,6 +455,7 @@
                 [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":provCode,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
                     pickDicList = dic[@"data"];
                     myIndexPath = indexPath;
+                    selectProp = @"cityCode";
                     [self showPick];
                 }];
             }
@@ -453,6 +471,7 @@
                 [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":cityCode,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
                     pickDicList = dic[@"data"];
                     myIndexPath = indexPath;
+                    selectProp = @"areaCode";
                     [self showPick];
                 }];
             }
@@ -462,6 +481,7 @@
             [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":@"0",@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
                 pickDicList = dic[@"data"];
                 myIndexPath = indexPath;
+                selectProp = @"schoolId";
                 [self showPick];
             }];
             
@@ -474,6 +494,7 @@
                 [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":schoolId,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
                     pickDicList = dic[@"data"];
                     myIndexPath = indexPath;
+                    selectProp = @"academy";
                     [self showPick];
                 }];
             }
@@ -486,29 +507,35 @@
                 [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":academy,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
                     pickDicList = dic[@"data"];
                     myIndexPath = indexPath;
+                    selectProp = @"prof";
                     [self showPick];
                 }];
             }
-        }
-        else if([proName isEqualToString:@"classId"]){
-            NSString* prof = dataDic[@"absUserSchool"][@"prof"];
-            
-            if (prof) {
-                NSString *str = @"/absapi/abscollege/queryByParentId";
-                [_webServiceController SendHttpRequestWithMethod:str argsDic:@{@"parentId":prof,@"token":[XYLUserInfoBLL shareUserInfoBLL].token} success:^(NSDictionary* dic){
-                    pickDicList = dic[@"data"];
-                    myIndexPath = indexPath;
-                    [self showPick];
-                }];
+        }else if([proName isEqualToString:@"inSchoolYear"]){
+            pickList = [[NSMutableArray alloc] init];
+            for (int i = 1945; i<2025; i++) {
+                [pickList addObject:[NSString stringWithFormat:@"%d",i]];
             }
+            pickview=[[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
+            selectProp = @"inSchoolYear";
+            pickview.delegate=self;
+            myIndexPath = indexPath;
+            [pickview show];
         }
-    }else if ([proName isEqualToString:@"provName"]){
+    }else if ([proName isEqualToString:@"username"]){
         //不可以编辑
     }else{
         EditProperyViewController* vc = [[EditProperyViewController alloc] init];
-        vc.titleStr = userPropretys[indexPath.row][@"title"];
+        if (indexPath.section == 0) {
+            vc.propery = userPropretys[indexPath.row][@"propery"];
+        }else if (indexPath.section == 1){
+            vc.propery = schoolPropretys[indexPath.row][@"propery"];
+        }else{
+            vc.propery = workPropretys[indexPath.row][@"propery"];
+        }
+        vc.titleStr = @"信息";//userPropretys[indexPath.row][@"title"];
         vc.type = indexPath.section;
-        vc.propery = userPropretys[indexPath.row][@"propery"];
+        //vc.propery = selectProp;//userPropretys[indexPath.row][@"propery"];
         [self presentViewController:vc animated:YES completion:nil];
     }
 }
@@ -522,7 +549,9 @@
                 [pickList addObject:item[@"name"]];
             }
         }
-        
+        if (pickview){
+            [pickview remove];
+        }
         pickview = [[ZHPickView alloc] initPickviewWithArray:pickList isHaveNavControler:NO];
         
         pickview.delegate=self;
@@ -542,27 +571,75 @@
 
 -(void)toobarDonBtnHaveClick:(ZHPickView *)pickView resultString:(NSString *)resultString
 {
+    XYLCommonTableViewCell*cell = [table cellForRowAtIndexPath:myIndexPath];
+    cell.rightContent.text = resultString;
     NSDictionary* dic;
-    if ([userPropretys[myIndexPath.row][@"propery"] isEqualToString: @"sex"]) {
+    if ([selectProp isEqualToString: @"sex"]) {
         dic = @{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, @"sex":resultString, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
-    }else if([userPropretys[myIndexPath.row][@"propery"] isEqualToString: @"isvalid"]) {
-        dic = @{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, @"isvalid":resultString, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+    }else if([selectProp isEqualToString: @"isvalid"]) {
+        if ([resultString isEqualToString:@"是"]) {
+            dic = @{(myIndexPath.section==0?@"id":@"userId"):[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, @"isvalid":@"1", @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+        }else{
+            dic = @{(myIndexPath.section==0?@"id":@"userId"):[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, @"isvalid":@"0", @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+        }
+    }else if ([selectProp isEqualToString: @"className"]) {
+        dic = @{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, @"className":resultString, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+    }
+    else if([selectProp isEqualToString: @"inSchoolYear"]){
+        dic = @{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid, @"inSchoolYear":resultString, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+        
     }else{
+        NSString* code;
+        for (NSDictionary* item in pickDicList) {
+            if ([item[@"name"] isEqualToString:resultString]) {
+                code = item[@"id"];
+                break;
+            }
+        }
+        if (myIndexPath.section == 0){
+            dic = @{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, selectProp:code, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+        }else{
+            dic = @{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid, selectProp:code, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+        }
+//        if ([selectProp isEqualToString:@"areaCode"] || [selectProp isEqualToString:@"className"]) {
+//            if (myIndexPath.section == 0){
+//                dic = @{@"id":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid,@"userName":[XYLUserInfoBLL shareUserInfoBLL].userInfo.username, selectProp:code, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+//            }else{
+//                dic = @{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid, selectProp:code, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+//            }
+//        }else{//还要设置下级pick
+//            if ([selectProp isEqualToString:@"cityCode"]) {
+//                dic = @{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid, selectProp:code,@"areaCode":@"01", @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+//            }else if ([selectProp isEqualToString:@"provCode"]) {
+//                dic = @{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid, selectProp:code,@"cityCode":@"01",@"areaCode":@"01", @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+//            }else if ([selectProp isEqualToString:@"prof"]) {
+//                dic = @{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid, selectProp:code, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+//            }else if ([selectProp isEqualToString:@"academy"]) {
+//                dic = @{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid, selectProp:code,@"prof":@"01", @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+//            }else if ([selectProp isEqualToString:@"school"]) {
+//                dic = @{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid, selectProp:code,@"academy":@"01",@"prof":@"01", @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+//            }else {
+//                dic = @{@"userId":[XYLUserInfoBLL shareUserInfoBLL].userInfo.userid, selectProp:code, @"token":[XYLUserInfoBLL shareUserInfoBLL].token};
+//            }
+//        }
+
+        
         
     }
     
     NSString* str;
-    if (myIndexPath.row == 0) {
+    if (myIndexPath.section == 0) {
         str = @"/absapi/absuserinfo/update";
-    }else if (myIndexPath.row == 1){
+    }else if (myIndexPath.section == 1){
         str = @"/absapi/absuserschool/save";
     }else{
         str = @"/absapi/absuserwork/updateByUserId";
     }
     
     [_webServiceController SendHttpRequestWithMethod:str argsDic:dic success:^(NSDictionary* dic){
-        [self dismissViewControllerAnimated:YES completion:nil];
+        //[self dismissViewControllerAnimated:YES completion:nil];
         [[KGProgressView windowProgressView] showErrorWithStatus:@"保存成功" duration:0.5];
+        [self refresh];
     }];
 }
 @end

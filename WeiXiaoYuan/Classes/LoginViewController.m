@@ -134,7 +134,7 @@
     vc1.tabBarItem.title = @"众筹";
     WenZhangViewController *vc2 = [[WenZhangViewController alloc] init];
     vc2.tabBarItem.image = [UIImage imageNamed:@"icon_meassage_nor.png"];
-    vc2.tabBarItem.title = @"文章";
+    vc2.tabBarItem.title = @"资源";
     FunctionViewController *vc3 = [[FunctionViewController alloc] init];
     vc3.tabBarItem.image = [UIImage imageNamed:@"icon_selfinfo_nor1.png"];
     vc3.tabBarItem.title = @"通讯录";

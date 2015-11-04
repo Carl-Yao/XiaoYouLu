@@ -253,7 +253,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="文章" image="icon_square_nor.png" id="cEL-Iv-b1X"/>
+                    <tabBarItem key="tabBarItem" title="资源" image="icon_square_sel.png" id="cEL-Iv-b1X"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nIQ-pG-XaM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -414,6 +414,7 @@
         <image name="icon_meassage_nor.png" width="40" height="40"/>
         <image name="icon_selfinfo_nor.png" width="40" height="40"/>
         <image name="icon_square_nor.png" width="40" height="40"/>
+        <image name="icon_square_sel.png" width="40" height="40"/>
         <image name="name.png" width="290" height="51"/>
         <image name="pas.png" width="290" height="53"/>
     </resources>
